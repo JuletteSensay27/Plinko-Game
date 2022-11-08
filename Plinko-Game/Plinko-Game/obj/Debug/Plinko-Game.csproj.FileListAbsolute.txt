@@ -1,0 +1,16 @@
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\bin\Debug\Plinko-Game.exe.config
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\bin\Debug\Plinko-Game.exe
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\bin\Debug\Plinko-Game.pdb
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\Plinko-Game.csproj.AssemblyReference.cache
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\Plinko-Game.csproj.SuggestedBindingRedirects.cache
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\MainWindow.g.cs
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\App.g.cs
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\Plinko-Game_MarkupCompile.cache
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\Plinko-Game_MarkupCompile.lref
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\MainWindow.baml
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\Plinko-Game.g.resources
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\Plinko_Game.Properties.Resources.resources
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\Plinko-Game.csproj.GenerateResource.cache
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\Plinko-Game.csproj.CoreCompileInputs.cache
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\Plinko-Game.exe
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\Plinko-Game.pdb
