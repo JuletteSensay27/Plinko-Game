@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Plinko_Game"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" SizeToContent="WidthAndHeight">
+        Title="MainWindow" Height="450" Width="1080" SizeToContent="Height">
     <Grid x:Name="mainGrid">
         
     </Grid>
