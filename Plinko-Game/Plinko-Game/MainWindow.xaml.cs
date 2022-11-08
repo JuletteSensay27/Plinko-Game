@@ -145,7 +145,7 @@ namespace Plinko_Game
 
             while (counter <= gameBoard.Length) 
             {
-                await Task.Delay(100) ;
+                await Task.Delay(75) ;
 
                 if (counter < 1)
                 {
