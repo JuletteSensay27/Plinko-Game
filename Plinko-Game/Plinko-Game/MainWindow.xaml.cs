@@ -25,6 +25,7 @@ namespace Plinko_Game
         Border gameContBorder = new Border();
         Button gameButton = new Button();
         private int[] ballPosition = new int[9];
+        private Ellipse gameBall = new Ellipse();
  
         public MainWindow()
         {
@@ -129,6 +130,14 @@ namespace Plinko_Game
                     gameBoard[x][y].Content = string.Empty;
 
             Random rnd = new Random();
+
+            gameBall = new Ellipse();
+            gameBall.Width = 25;
+            gameBall.Height = 25;
+            gameBall.Fill = new SolidColorBrush(Colors.MediumPurple);
+            gameBall.Stroke = new SolidColorBrush(Colors.DarkViolet);
+            gameBall.StrokeThickness = 3;
+
             int newPos = 0;
             int counter = 0;
             int prevPos = 0;
@@ -141,7 +150,7 @@ namespace Plinko_Game
                 if (counter < 1)
                 {
                     prevPos = ballPosition[0];
-                    gameBoard[counter][ballPosition[0]].Content = "*";
+                    gameBoard[counter][ballPosition[0]].Content = gameBall;
                     newPos = rnd.Next(0, 1000000);
                     newPos %= 100000;
                     newPos %= 10000;
@@ -150,10 +159,10 @@ namespace Plinko_Game
                 }
                 else if (counter == 1)
                 {
-                    gameBoard[counter - 1][prevPos].Content = "";
+                    gameBoard[counter - 1][prevPos].Content = string.Empty;
                     prevPos = ballPosition[1];
                     newPos = prevPos;
-                    gameBoard[counter][ballPosition[1]].Content = "*";
+                    gameBoard[counter][ballPosition[1]].Content = gameBall;
 
 
                     if (newPos == 0)
@@ -195,10 +204,10 @@ namespace Plinko_Game
                 else if (counter == 2) 
                 {
 
-                    gameBoard[counter - 1][prevPos].Content = "";
+                    gameBoard[counter - 1][prevPos].Content = string.Empty;
                     prevPos = ballPosition[2];
                     newPos = prevPos;
-                    gameBoard[counter][ballPosition[2]].Content = "*";
+                    gameBoard[counter][ballPosition[2]].Content = gameBall;
 
                     if (newPos == 0)
                     {
@@ -254,10 +263,10 @@ namespace Plinko_Game
                 else if (counter == 3)
                 {
 
-                    gameBoard[counter - 1][prevPos].Content = "";
+                    gameBoard[counter - 1][prevPos].Content = string.Empty;
                     prevPos = ballPosition[3];
                     newPos = prevPos;
-                    gameBoard[counter][ballPosition[3]].Content = "*";
+                    gameBoard[counter][ballPosition[3]].Content = gameBall;
 
                     if (newPos == 0)
                     {
@@ -329,10 +338,10 @@ namespace Plinko_Game
                 else if (counter == 4)
                 {
 
-                    gameBoard[counter - 1][prevPos].Content = "";
+                    gameBoard[counter - 1][prevPos].Content = string.Empty;
                     prevPos = ballPosition[4];
                     newPos = prevPos;
-                    gameBoard[counter][ballPosition[4]].Content = "*";
+                    gameBoard[counter][ballPosition[4]].Content = gameBall;
 
                     if (newPos == 0)
                     {
@@ -420,10 +429,10 @@ namespace Plinko_Game
                 else if (counter == 5)
                 {
 
-                    gameBoard[counter - 1][prevPos].Content = "";
+                    gameBoard[counter - 1][prevPos].Content = string.Empty;
                     prevPos = ballPosition[5];
                     newPos = prevPos;
-                    gameBoard[counter][ballPosition[5]].Content = "*";
+                    gameBoard[counter][ballPosition[5]].Content = gameBall;
 
                     if (newPos == 0)
                     {
@@ -527,10 +536,10 @@ namespace Plinko_Game
                 else if (counter == 6)
                 {
 
-                    gameBoard[counter - 1][prevPos].Content = "";
+                    gameBoard[counter - 1][prevPos].Content = string.Empty;
                     prevPos = ballPosition[6];
                     newPos = prevPos;
-                    gameBoard[counter][ballPosition[6]].Content = "*";
+                    gameBoard[counter][ballPosition[6]].Content = gameBall;
 
                     if (newPos == 0)
                     {
@@ -650,10 +659,10 @@ namespace Plinko_Game
                 else if (counter == 7)
                 {
 
-                    gameBoard[counter - 1][prevPos].Content = "";
+                    gameBoard[counter - 1][prevPos].Content = string.Empty;
                     prevPos = ballPosition[7];
                     newPos = prevPos;
-                    gameBoard[counter][ballPosition[7]].Content = "*";
+                    gameBoard[counter][ballPosition[7]].Content = gameBall;
 
                     if (newPos == 0)
                     {
@@ -789,10 +798,10 @@ namespace Plinko_Game
                 else if (counter == 8)
                 {
 
-                    gameBoard[counter - 1][prevPos].Content = "";
+                    gameBoard[counter - 1][prevPos].Content = string.Empty;
                     prevPos = ballPosition[8];
                     newPos = prevPos;
-                    gameBoard[counter][ballPosition[8]].Content = "*";
+                    gameBoard[counter][ballPosition[8]].Content = gameBall;
 
                     /*if (newPos == 0)
                     {
