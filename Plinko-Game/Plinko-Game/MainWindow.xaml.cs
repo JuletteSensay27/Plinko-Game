@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,11 +27,16 @@ namespace Plinko_Game
         Button gameButton = new Button();
         private int[] ballPosition = new int[9];
         private Ellipse gameBall = new Ellipse();
+        private Regex pattern = new Regex(@"^[0-9]+$");
+        private string[] errorMessage = new string[3];
  
         public MainWindow()
         {
             InitializeComponent();
             initGameBoard();
+            gameButton.IsEnabled = false;
+            userBalanceLbl.Content += "10000";
+
         }
 
         private void initGameBoard() 
@@ -942,6 +948,52 @@ namespace Plinko_Game
             }
 
         }
-       
+
+        private string formatErrMessage(string[] errMess) 
+        {
+            string errMessToShow = string.Empty;
+
+            errMessToShow = "Error Code: " + errMess[0] + "\n" +
+                "Error Name: " + errMess[1] + "\n" +
+                "Error Description: " + errMess[2];
+
+            return errMessToShow;
+        }
+
+        private void addValueBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string currentWagerVal = userWagerTbx.Text;
+            int newWagerVal = 0;
+
+            if (!pattern.IsMatch(currentWagerVal))
+            {
+                for (int i = 0; i < errorMessage.Length; i++)
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            errorMessage[i] = "IE1";
+                            break;
+                        case 1:
+                            errorMessage[i] = "INPUT ERROR!";
+                            break;
+                        case 2:
+                            errorMessage[i] = "INVALID AMOUNT! PLEASE TRY AGAIN !";
+                            break;
+                    }
+                }
+
+                MessageBox.Show(formatErrMessage(errorMessage));
+            }
+            else
+            {
+                newWagerVal = int.Parse(currentWagerVal);
+                newWagerVal++;
+                userWagerTbx.Text = newWagerVal.ToString();
+
+
+            }
+            
+        }
     }
 }
