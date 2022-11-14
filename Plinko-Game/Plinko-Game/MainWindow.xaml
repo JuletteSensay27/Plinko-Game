@@ -14,7 +14,7 @@
         <Button x:Name="subValueBtn" Content="-" HorizontalAlignment="Left" Margin="33,197,0,0" VerticalAlignment="Top" Width="12" Click="subValueBtn_Click"/>
         <TextBox x:Name="userWagerTbx" HorizontalAlignment="Left" Margin="50,198,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="89"/>
         <Button x:Name="addValueBtn" Content="+" HorizontalAlignment="Left" Margin="144,197,0,0" VerticalAlignment="Top" Width="12" Click="addValueBtn_Click"/>
-        <Button x:Name="confirmWagerBtn" Content="Place Wager" HorizontalAlignment="Left" Margin="33,234,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="confirmWagerBtn" Content="Place Wager" HorizontalAlignment="Left" Margin="33,234,0,0" VerticalAlignment="Top" Click="confirmWagerBtn_Click"/>
 
     </Grid>
 </Window>

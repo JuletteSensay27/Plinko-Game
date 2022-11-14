@@ -841,7 +841,7 @@ namespace Plinko_Game
                     switch (i)
                     {
                         case 0:
-                            errorMessage[i] = "IE1";
+                            errorMessage[i] = "E1";
                             break;
                         case 1:
                             errorMessage[i] = "INPUT ERROR!";
@@ -876,7 +876,7 @@ namespace Plinko_Game
                     switch (i)
                     {
                         case 0:
-                            errorMessage[i] = "IE1";
+                            errorMessage[i] = "E1";
                             break;
                         case 1:
                             errorMessage[i] = "INPUT ERROR!";
@@ -899,11 +899,64 @@ namespace Plinko_Game
                 }
                 else
                 {
-                    newWagerVal--;
-                    
+                    newWagerVal--;              
                 }
 
                 userWagerTbx.Text = newWagerVal.ToString();
+            }
+        }
+
+        private void confirmWagerBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string userWagerVal = userWagerTbx.Text;
+            int playerBalance = 0;
+            int playerWager = 0;
+
+            if (!pattern.IsMatch(userWagerVal))
+            {
+                for (int i = 0; i < errorMessage.Length; i++)
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            errorMessage[i] = "E1";
+                            break;
+                        case 1:
+                            errorMessage[i] = "INPUT ERROR!";
+                            break;
+                        case 2:
+                            errorMessage[i] = "INVALID AMOUNT! PLEASE TRY AGAIN !";
+                            break;
+                    }
+                }
+
+                MessageBox.Show(formatErrMessage(errorMessage));
+            }
+            else 
+            {
+                playerBalance = int.Parse(userBalanceLbl.Content.ToString().Split(':')[1]); ;
+                playerWager = int.Parse(userWagerVal);
+
+                if (playerBalance < playerWager) 
+                {
+                    for (int i = 0; i < errorMessage.Length; i++)
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                                errorMessage[i] = "E2";
+                                break;
+                            case 1:
+                                errorMessage[i] = "WAGER ERROR!";
+                                break;
+                            case 2:
+                                errorMessage[i] = "INSUFFICIENT BALANCE!";
+                                break;
+                        }
+                    }
+
+                    MessageBox.Show(formatErrMessage(errorMessage));
+                }
             }
         }
     }
