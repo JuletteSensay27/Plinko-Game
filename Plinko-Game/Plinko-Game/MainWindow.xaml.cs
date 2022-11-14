@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Drawing;
+
 
 namespace Plinko_Game
 {
@@ -29,12 +31,13 @@ namespace Plinko_Game
         private Ellipse gameBall = new Ellipse();
         private Regex pattern = new Regex(@"^[0-9]+$");
         private string[] errorMessage = new string[3];
+        private Image img = new Image();
  
         public MainWindow()
         {
             InitializeComponent();
             initGameBoard();
-            gameButton.IsEnabled = false;
+           
             userBalanceLbl.Content += "10000";
 
         }
@@ -808,141 +811,7 @@ namespace Plinko_Game
                     prevPos = ballPosition[8];
                     newPos = prevPos;
                     gameBoard[counter][ballPosition[8]].Content = gameBall;
-
-                    /*if (newPos == 0)
-                    {
-                        newPos = rnd.Next(0, 1000000);
-                        newPos %= 100000;
-                        newPos %= 10000;
-                        newPos %= 2;
-
-                        if (newPos == 0)
-                        {
-                            newPos = 0;
-                        }
-                        else
-                        {
-                            newPos = 1;
-                        }
-                    }
-                    else if (newPos == 1)
-                    {
-                        newPos = rnd.Next(0, 1000000);
-                        newPos %= 100000;
-                        newPos %= 10000;
-                        newPos %= 2;
-
-                        if (newPos == 0)
-                        {
-                            newPos = 1;
-                        }
-                        else
-                        {
-                            newPos = 2;
-                        }
-                    }
-                    else if (newPos == 2)
-                    {
-                        newPos = rnd.Next(0, 1000000);
-                        newPos %= 100000;
-                        newPos %= 10000;
-                        newPos %= 2;
-
-                        if (newPos == 0)
-                        {
-                            newPos = 2;
-                        }
-                        else
-                        {
-                            newPos = 3;
-                        }
-                    }
-                    else if (newPos == 3)
-                    {
-                        newPos = rnd.Next(0, 1000000);
-                        newPos %= 100000;
-                        newPos %= 10000;
-                        newPos %= 2;
-
-                        if (newPos == 0)
-                        {
-                            newPos = 4;
-                        }
-                        else
-                        {
-                            newPos = 5;
-                        }
-                    }
-                    else if (newPos == 4)
-                    {
-                        newPos = rnd.Next(0, 1000000);
-                        newPos %= 100000;
-                        newPos %= 10000;
-                        newPos %= 2;
-
-                        if (newPos == 0)
-                        {
-                            newPos = 5;
-                        }
-                        else
-                        {
-                            newPos = 6;
-                        }
-                    }
-                    else if (newPos == 5)
-                    {
-                        newPos = rnd.Next(0, 1000000);
-                        newPos %= 100000;
-                        newPos %= 10000;
-                        newPos %= 2;
-
-                        if (newPos == 0)
-                        {
-                            newPos = 6;
-                        }
-                        else
-                        {
-                            newPos = 7;
-                        }
-                    }
-                    else if (newPos == 6)
-                    {
-                        newPos = rnd.Next(0, 1000000);
-                        newPos %= 100000;
-                        newPos %= 10000;
-                        newPos %= 2;
-
-                        if (newPos == 0)
-                        {
-                            newPos = 7;
-                        }
-                        else
-                        {
-                            newPos = 8;
-                        }
-                    }
-                    else if (newPos == 7)
-                    {
-                        newPos = rnd.Next(0, 1000000);
-                        newPos %= 100000;
-                        newPos %= 10000;
-                        newPos %= 2;
-
-                        if (newPos == 0)
-                        {
-                            newPos = 8;
-                        }
-                        else
-                        {
-                            newPos = 9;
-                        }
-                    }
-
-                    ballPosition[8] = newPos;*/
                 }
-
-
-
 
                 counter++;
             }
@@ -991,9 +860,51 @@ namespace Plinko_Game
                 newWagerVal++;
                 userWagerTbx.Text = newWagerVal.ToString();
 
-
             }
             
+        }
+
+        private void subValueBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string currentWagerVal = userWagerTbx.Text;
+            int newWagerVal = 0;
+
+            if (!pattern.IsMatch(currentWagerVal))
+            {
+                for (int i = 0; i < errorMessage.Length; i++)
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            errorMessage[i] = "IE1";
+                            break;
+                        case 1:
+                            errorMessage[i] = "INPUT ERROR!";
+                            break;
+                        case 2:
+                            errorMessage[i] = "INVALID AMOUNT! PLEASE TRY AGAIN !";
+                            break;
+                    }
+                }
+
+                MessageBox.Show(formatErrMessage(errorMessage));
+            }
+            else
+            {
+                newWagerVal = int.Parse(currentWagerVal);
+
+                if (newWagerVal <= 0) 
+                {
+                    newWagerVal = 0;
+                }
+                else
+                {
+                    newWagerVal--;
+                    
+                }
+
+                userWagerTbx.Text = newWagerVal.ToString();
+            }
         }
     }
 }
