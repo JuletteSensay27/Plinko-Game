@@ -823,6 +823,8 @@ namespace Plinko_Game
                 counter++;
             }
 
+            gameButton.IsEnabled= false;
+            confirmWagerBtn.IsEnabled= true;
         }
 
         private string formatErrMessage(string[] errMess) 
@@ -1013,6 +1015,10 @@ namespace Plinko_Game
             string[] customers = new string[nextcustomerID+1];
             string password = "";
 
+            lblloginstatus.Content = "Login Status : ";
+            uPassStatusLbl.Content = "Password Status : ";
+            uNameStatusLbl.Content = "Username Status: ";
+
             int y = 0;
 
             foreach (var customer in allCustomers)
@@ -1023,27 +1029,34 @@ namespace Plinko_Game
 
             if (customers.Contains(txtloginUsername.Text))
             {
-                lblloginstatus.Content = "Username Found";
+                uNameStatusLbl.Content += "Username Found";
                 password = customerLogin.Customer_Password.ToString();
 
                 if (txtloginPassword.Password == password)
                 {
-                    lblloginstatus.Content = "Login Success";
+                    uPassStatusLbl.Content += "Correct Password";
+                    lblloginstatus.Content += "Login Success";
                     userNameLbl.Content += customerLogin.Customer_FirstName;
                     userBalanceLbl.Content += customerLogin.Customer_CurrentBalance.ToString();
                     confirmWagerBtn.IsEnabled = true;
                     addValueBtn.IsEnabled = true;
                     subValueBtn.IsEnabled = true;
+                    loginBtn.Content = "Log Out";
+                    txtloginPassword.Password = string.Empty;
+                    txtloginUsername.Text= string.Empty;
 
                 }
                 else
                 {
-                    lblloginstatus.Content = "Incorrect Password";
+                    uPassStatusLbl.Content += " Incorrect Password";
+                    lblloginstatus.Content += "Login Failed";
                 }
             }
             else
             {
-                lblloginstatus.Content = "Username Not Found";
+                uNameStatusLbl.Content += "Username Not Found";
+                lblloginstatus.Content += "Login Failed";
+
             }
 
 
@@ -1051,7 +1064,36 @@ namespace Plinko_Game
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)
         {
-            login();
+            if (loginBtn.Content.ToString() == "Log In")
+                login();
+            else 
+            {
+                string message = "Do you wish to proceed with this operation?";
+                string caption = "LOGGING OUT";
+                var confirm = MessageBox.Show(message, caption, MessageBoxButton.YesNo);
+
+                if (confirm == MessageBoxResult.Yes) 
+                {
+                    logout();
+                   
+                }
+            }
+
+        }
+
+        private void logout() 
+        {
+            userBalanceLbl.Content = "User Balance : ";
+            userNameLbl.Content = "Username : ";
+            confirmWagerBtn.IsEnabled = false;
+            addValueBtn.IsEnabled = false;
+            subValueBtn.IsEnabled = false;
+            gameButton.IsEnabled = false;
+            loginBtn.Content = "Log In";
+            lblloginstatus.Content = "Login Status : ";
+            uPassStatusLbl.Content = "Password Status : ";
+            uNameStatusLbl.Content = "Username Status: ";
+
         }
     }
 }

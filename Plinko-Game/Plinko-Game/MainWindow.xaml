@@ -8,8 +8,8 @@
         Title="MainWindow" Height="450" Width="1080" SizeToContent="Height">
     <Grid x:Name="mainGrid">
         <Button x:Name="loginBtn" Content="Log In" HorizontalAlignment="Left" Margin="19,95,0,0" VerticalAlignment="Top" Height="27" Width="92" Click="loginBtn_Click"/>
-        <Label x:Name="userNameLbl" Content="Username: " HorizontalAlignment="Left" Margin="19,211,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="userBalanceLbl" Content="User Balance: " HorizontalAlignment="Left" Margin="19,242,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="userNameLbl" Content="Username : " HorizontalAlignment="Left" Margin="19,211,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="userBalanceLbl" Content="User Balance : " HorizontalAlignment="Left" Margin="19,242,0,0" VerticalAlignment="Top"/>
         <Label x:Name="userWagerHeaderLbl" Content="Place Bet Here: " HorizontalAlignment="Left" Margin="19,273,0,0" VerticalAlignment="Top"/>
         <Button x:Name="subValueBtn" Content="-" HorizontalAlignment="Left" Margin="26,315,0,0" VerticalAlignment="Top" Width="12" Click="subValueBtn_Click"/>
         <TextBox x:Name="userWagerTbx" HorizontalAlignment="Left" Margin="43,316,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="89"/>
@@ -17,7 +17,9 @@
         <Button x:Name="confirmWagerBtn" Content="Place Wager" HorizontalAlignment="Left" Margin="26,352,0,0" VerticalAlignment="Top" Click="confirmWagerBtn_Click"/>
         <TextBox x:Name="txtloginUsername" HorizontalAlignment="Left" Margin="19,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <PasswordBox x:Name="txtloginPassword" HorizontalAlignment="Left" Margin="19,62,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="lblloginstatus" Content="Label" HorizontalAlignment="Left" Margin="19,141,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblloginstatus" Content="Log In Status : " HorizontalAlignment="Left" Margin="19,141,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="uNameStatusLbl" Content="Username Status : " HorizontalAlignment="Left" Margin="166,26,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="uPassStatusLbl" Content="Password Status : " HorizontalAlignment="Left" Margin="166,58,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
