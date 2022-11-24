@@ -32,14 +32,21 @@ namespace Plinko_Game
         private Regex pattern = new Regex(@"^[0-9]+$");
         private string[] errorMessage = new string[3];
         private Image img = new Image();
- 
+        private AmazonDBDataContext amazonDB = new AmazonDBDataContext(Properties.Settings.Default.Group2_RoyalCasinoConnectionString);
+        private int nextcustomerID = 0;
+
         public MainWindow()
         {
             InitializeComponent();
             initGameBoard();
-           
-            userBalanceLbl.Content += "10000";
+            if (userNameLbl.Content.ToString().Split(':')[1] == " ") 
+            {
+                confirmWagerBtn.IsEnabled = false;
+                addValueBtn.IsEnabled = false;
+                subValueBtn.IsEnabled = false;  
+                gameButton.IsEnabled = false;
 
+            }
         }
 
         private void initGameBoard() 
@@ -909,7 +916,7 @@ namespace Plinko_Game
         private void confirmWagerBtn_Click(object sender, RoutedEventArgs e)
         {
             string userWagerVal = userWagerTbx.Text;
-            int playerBalance = 0;
+            decimal playerBalance = 0;
             int playerWager = 0;
 
             if (!pattern.IsMatch(userWagerVal))
@@ -919,7 +926,7 @@ namespace Plinko_Game
                     switch (i)
                     {
                         case 0:
-                            errorMessage[i] = "E1";
+                            errorMessage[i] += "E1";
                             break;
                         case 1:
                             errorMessage[i] = "INPUT ERROR!";
@@ -934,10 +941,10 @@ namespace Plinko_Game
             }
             else 
             {
-                playerBalance = int.Parse(userBalanceLbl.Content.ToString().Split(':')[1]); ;
+                playerBalance = decimal.Parse(userBalanceLbl.Content.ToString().Split(':')[1]); 
                 playerWager = int.Parse(userWagerVal);
 
-                if (playerBalance < playerWager) 
+                if (playerBalance < playerWager)
                 {
                     for (int i = 0; i < errorMessage.Length; i++)
                     {
@@ -957,7 +964,83 @@ namespace Plinko_Game
 
                     MessageBox.Show(formatErrMessage(errorMessage));
                 }
+                else if (playerWager < 1)
+                {
+                    for (int i = 0; i < errorMessage.Length; i++)
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                                errorMessage[i] = "E3";
+                                break;
+                            case 1:
+                                errorMessage[i] = "WAGER ERROR!";
+                                break;
+                            case 2:
+                                errorMessage[i] = "CANNOT WAGER A VALUE OF ZERO!";
+                                break;
+                        }
+                    }
+
+                    MessageBox.Show(formatErrMessage(errorMessage));
+                }
+                else 
+                {
+                    userBalanceLbl.Content = $"User Balance: {playerBalance - playerWager}";
+                    
+                }
             }
+        }
+
+        private void login()
+        {
+            var allCustomers = (from b in amazonDB.table_Customers
+                                where b.Customer_Username == txtloginUsername.Text
+                                select b).ToList();
+
+            var customerLogin = (from a in amazonDB.table_Customers
+                                 where a.Customer_Username == txtloginUsername.Text
+                                 select a).FirstOrDefault();
+
+            string[] customers = new string[nextcustomerID+1];
+            string password = "";
+
+            int y = 0;
+
+            foreach (var customer in allCustomers)
+            {   
+                    customers[y] = customer.Customer_Username.ToString();
+                    y++;
+            }
+
+            if (customers.Contains(txtloginUsername.Text))
+            {
+                lblloginstatus.Content = "Username Found";
+                password = customerLogin.Customer_Password.ToString();
+
+                if (txtloginPassword.Password == password)
+                {
+                    lblloginstatus.Content = "Login Success";
+                    userNameLbl.Content += customerLogin.Customer_FirstName;
+                    userBalanceLbl.Content += customerLogin.Customer_CurrentBalance.ToString();
+
+                }
+                else
+                {
+                    lblloginstatus.Content = "Incorrect Password";
+                }
+            }
+            else
+            {
+                lblloginstatus.Content = "Username Not Found";
+            }
+
+
+        }
+
+        private void loginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            login();
         }
     }
 }
