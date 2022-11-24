@@ -34,6 +34,8 @@ namespace Plinko_Game
         private Image img = new Image();
         private AmazonDBDataContext amazonDB = new AmazonDBDataContext(Properties.Settings.Default.Group2_RoyalCasinoConnectionString);
         private int nextcustomerID = 0;
+        private int playerWager = 0;
+        private decimal userBalance = 0;
 
         public MainWindow()
         {
@@ -141,6 +143,9 @@ namespace Plinko_Game
 
         private async void gameButton_Click(object sender, EventArgs e) 
         {
+            Label[] prizeRow = new Label[9];
+            gameButton.IsEnabled= false;
+
             for(int x = 0; x < gameBoard.Length; x++)
                 for(int y = 0;y  < gameBoard[x].Length; y++)
                     gameBoard[x][y].Content = string.Empty;
@@ -823,6 +828,11 @@ namespace Plinko_Game
                 counter++;
             }
 
+            for (int i = 0; i < gameBoard[8].Length; i++) 
+            {
+                prizeRow[i] = gameBoard[8][i];
+            }
+            showPrize(prizeRow, playerWager, userBalance);
             gameButton.IsEnabled= false;
             confirmWagerBtn.IsEnabled= true;
         }
@@ -917,6 +927,7 @@ namespace Plinko_Game
 
         private void confirmWagerBtn_Click(object sender, RoutedEventArgs e)
         {
+            this.playerWager = 0;
             string userWagerVal = userWagerTbx.Text;
             decimal playerBalance = 0;
             int playerWager = 0;
@@ -994,6 +1005,8 @@ namespace Plinko_Game
                     else
                     {
                         userBalanceLbl.Content = $"User Balance: {playerBalance - playerWager}";
+                        this.playerWager = playerWager;
+                        userBalance = decimal.Parse(userBalanceLbl.Content.ToString().Split(':')[1]);
                         confirmWagerBtn.IsEnabled = false;
                         gameButton.IsEnabled = true;
 
@@ -1034,7 +1047,7 @@ namespace Plinko_Game
 
                 if (txtloginPassword.Password == password)
                 {
-                    uPassStatusLbl.Content += "Correct Password";
+                    uPassStatusLbl.Content += "Password match";
                     lblloginstatus.Content += "Login Success";
                     userNameLbl.Content += customerLogin.Customer_FirstName;
                     userBalanceLbl.Content += customerLogin.Customer_CurrentBalance.ToString();
@@ -1048,7 +1061,7 @@ namespace Plinko_Game
                 }
                 else
                 {
-                    uPassStatusLbl.Content += " Incorrect Password";
+                    uPassStatusLbl.Content += "Password not match!";
                     lblloginstatus.Content += "Login Failed";
                 }
             }
@@ -1058,8 +1071,6 @@ namespace Plinko_Game
                 lblloginstatus.Content += "Login Failed";
 
             }
-
-
         }
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)
@@ -1094,6 +1105,67 @@ namespace Plinko_Game
             uPassStatusLbl.Content = "Password Status : ";
             uNameStatusLbl.Content = "Username Status: ";
 
+        }
+
+        private void showPrize(Label[] prizeRow, int playerWager, decimal userBalance) 
+        {
+
+            decimal playerPrize = 0;
+
+            for (int i = 0; i < prizeRow.Length; i++) 
+            {
+                if (prizeRow[i].Content == gameBall) 
+                {
+                    switch (i) 
+                    {
+                        case 0:
+                            playerPrize = playerWager * 10;
+                            userBalance += playerPrize;
+                            userBalanceLbl.Content = $"User Balance: {userBalance}";
+                            break;
+                        case 1:
+                            playerPrize = playerWager * 5;
+                            userBalance += playerPrize;
+                            userBalanceLbl.Content = $"User Balance: {userBalance}";
+                            break;
+                        case 2:
+                            playerPrize = playerWager * 2;
+                            userBalance += playerPrize;
+                            userBalanceLbl.Content = $"User Balance: {userBalance}";
+                            break;
+                        case 3:
+                            playerPrize = playerWager * 0;
+                            userBalance += playerPrize;
+                            userBalanceLbl.Content = $"User Balance: {userBalance}";
+                            break;
+                        case 4:
+                            playerPrize = playerWager * 1;
+                            userBalance += playerPrize;
+                            userBalanceLbl.Content = $"User Balance: {userBalance}";
+                            break;
+                        case 5:
+                            playerPrize = playerWager * 0;
+                            userBalance += playerPrize;
+                            userBalanceLbl.Content = $"User Balance: {userBalance}";
+                            break;
+                        case 6:
+                            playerPrize = playerWager * 2;
+                            userBalance += playerPrize;
+                            userBalanceLbl.Content = $"User Balance: {userBalance}";
+                            break;
+                        case 7:
+                            playerPrize = playerWager * 5;
+                            userBalance += playerPrize;
+                            userBalanceLbl.Content = $"User Balance: {userBalance}";
+                            break;
+                        case 8:
+                            playerPrize = playerWager * 10;
+                            userBalance += playerPrize;
+                            userBalanceLbl.Content = $"User Balance: {userBalance}";
+                            break;
+                    }
+                }
+            }
         }
     }
 }
