@@ -2,10 +2,10 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="AmazonDB">
   <DataContextMoniker Name="/AmazonDBDataContext" />
   <nestedChildShapes>
-    <classShape Id="c17574ab-ee2a-49ad-a042-41a73545eb2c" absoluteBounds="5, 2, 2, 2.9247054036458331">
+    <classShape Id="c17574ab-ee2a-49ad-a042-41a73545eb2c" absoluteBounds="1.25, 0.5, 3.375, 2.9247054036458331">
       <DataClassMoniker Name="/AmazonDBDataContext/table_Customer" />
       <nestedChildShapes>
-        <elementListCompartment Id="4111b2f9-2ab9-4094-a753-34b9b5620d42" absoluteBounds="5.015, 2.46, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="4111b2f9-2ab9-4094-a753-34b9b5620d42" absoluteBounds="1.2650000000000001, 0.96, 3.3449999999999998, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

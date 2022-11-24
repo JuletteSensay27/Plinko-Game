@@ -918,76 +918,84 @@ namespace Plinko_Game
             string userWagerVal = userWagerTbx.Text;
             decimal playerBalance = 0;
             int playerWager = 0;
+            string message = "Do you wish to proceed with this operation?";
+            string caption = "PLACING WAGER";
+            var confirm = MessageBox.Show(message, caption, MessageBoxButton.YesNo);
 
-            if (!pattern.IsMatch(userWagerVal))
+            if (confirm == MessageBoxResult.Yes) 
             {
-                for (int i = 0; i < errorMessage.Length; i++)
-                {
-                    switch (i)
-                    {
-                        case 0:
-                            errorMessage[i] += "E1";
-                            break;
-                        case 1:
-                            errorMessage[i] = "INPUT ERROR!";
-                            break;
-                        case 2:
-                            errorMessage[i] = "INVALID AMOUNT! PLEASE TRY AGAIN !";
-                            break;
-                    }
-                }
-
-                MessageBox.Show(formatErrMessage(errorMessage));
-            }
-            else 
-            {
-                playerBalance = decimal.Parse(userBalanceLbl.Content.ToString().Split(':')[1]); 
-                playerWager = int.Parse(userWagerVal);
-
-                if (playerBalance < playerWager)
+                if (!pattern.IsMatch(userWagerVal))
                 {
                     for (int i = 0; i < errorMessage.Length; i++)
                     {
                         switch (i)
                         {
                             case 0:
-                                errorMessage[i] = "E2";
+                                errorMessage[i] += "E1";
                                 break;
                             case 1:
-                                errorMessage[i] = "WAGER ERROR!";
+                                errorMessage[i] = "INPUT ERROR!";
                                 break;
                             case 2:
-                                errorMessage[i] = "INSUFFICIENT BALANCE!";
+                                errorMessage[i] = "INVALID AMOUNT! PLEASE TRY AGAIN !";
                                 break;
                         }
                     }
 
                     MessageBox.Show(formatErrMessage(errorMessage));
                 }
-                else if (playerWager < 1)
+                else
                 {
-                    for (int i = 0; i < errorMessage.Length; i++)
+                    playerBalance = decimal.Parse(userBalanceLbl.Content.ToString().Split(':')[1]);
+                    playerWager = int.Parse(userWagerVal);
+
+                    if (playerBalance < playerWager)
                     {
-                        switch (i)
+                        for (int i = 0; i < errorMessage.Length; i++)
                         {
-                            case 0:
-                                errorMessage[i] = "E3";
-                                break;
-                            case 1:
-                                errorMessage[i] = "WAGER ERROR!";
-                                break;
-                            case 2:
-                                errorMessage[i] = "CANNOT WAGER A VALUE OF ZERO!";
-                                break;
+                            switch (i)
+                            {
+                                case 0:
+                                    errorMessage[i] = "E2";
+                                    break;
+                                case 1:
+                                    errorMessage[i] = "WAGER ERROR!";
+                                    break;
+                                case 2:
+                                    errorMessage[i] = "INSUFFICIENT BALANCE!";
+                                    break;
+                            }
                         }
-                    }
 
-                    MessageBox.Show(formatErrMessage(errorMessage));
-                }
-                else 
-                {
-                    userBalanceLbl.Content = $"User Balance: {playerBalance - playerWager}";
-                    
+                        MessageBox.Show(formatErrMessage(errorMessage));
+                    }
+                    else if (playerWager < 1)
+                    {
+                        for (int i = 0; i < errorMessage.Length; i++)
+                        {
+                            switch (i)
+                            {
+                                case 0:
+                                    errorMessage[i] = "E3";
+                                    break;
+                                case 1:
+                                    errorMessage[i] = "WAGER ERROR!";
+                                    break;
+                                case 2:
+                                    errorMessage[i] = "CANNOT WAGER A VALUE OF ZERO!";
+                                    break;
+                            }
+                        }
+
+                        MessageBox.Show(formatErrMessage(errorMessage));
+                    }
+                    else
+                    {
+                        userBalanceLbl.Content = $"User Balance: {playerBalance - playerWager}";
+                        confirmWagerBtn.IsEnabled = false;
+                        gameButton.IsEnabled = true;
+
+                    }
                 }
             }
         }
@@ -1023,6 +1031,9 @@ namespace Plinko_Game
                     lblloginstatus.Content = "Login Success";
                     userNameLbl.Content += customerLogin.Customer_FirstName;
                     userBalanceLbl.Content += customerLogin.Customer_CurrentBalance.ToString();
+                    confirmWagerBtn.IsEnabled = true;
+                    addValueBtn.IsEnabled = true;
+                    subValueBtn.IsEnabled = true;
 
                 }
                 else
