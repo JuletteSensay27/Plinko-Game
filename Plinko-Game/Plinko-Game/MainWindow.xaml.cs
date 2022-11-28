@@ -32,7 +32,7 @@ namespace Plinko_Game
         private Regex pattern = new Regex(@"^[0-9]+$");
         private string[] errorMessage = new string[3];
         private Image img = new Image();
-        private AmazonDBDataContext amazonDB = new AmazonDBDataContext(Properties.Settings.Default.Group2_RoyalCasinoConnectionString);
+        private AmazonDBDataContext amazonDB = new AmazonDBDataContext(Properties.Settings.Default.Group_2___CasinoConnectionString);
         private int nextcustomerID = 0;
         private int playerWager = 0;
         private decimal userBalance = 0;
