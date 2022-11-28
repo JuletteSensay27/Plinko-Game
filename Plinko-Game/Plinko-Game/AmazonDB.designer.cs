@@ -128,6 +128,24 @@ namespace Plinko_Game
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.vwFunqSearchCustomer", IsComposable=true)]
+		public IQueryable<vwFunqSearchCustomerResult> vwFunqSearchCustomer([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="NVarChar(50)")] string username)
+		{
+			return this.CreateMethodCallQuery<vwFunqSearchCustomerResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), username);
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.vwFunqAllGameLogs", IsComposable=true)]
+		public IQueryable<vwFunqAllGameLogsResult> vwFunqAllGameLogs()
+		{
+			return this.CreateMethodCallQuery<vwFunqAllGameLogsResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.vwFunqAllMachines", IsComposable=true)]
+		public IQueryable<vwFunqAllMachinesResult> vwFunqAllMachines()
+		{
+			return this.CreateMethodCallQuery<vwFunqAllMachinesResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.uspAddBalance")]
 		public int uspAddBalance([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> customerID, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Decimal(19,4)")] System.Nullable<decimal> addbalance)
 		{
@@ -163,6 +181,13 @@ namespace Plinko_Game
 			return ((ISingleResult<uspSelectCustomerBalanceResult>)(result.ReturnValue));
 		}
 		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.uspSelectMachineBalance")]
+		public ISingleResult<uspSelectMachineBalanceResult> uspSelectMachineBalance([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> machineID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), machineID);
+			return ((ISingleResult<uspSelectMachineBalanceResult>)(result.ReturnValue));
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.uspSelectMachineCurrentWinnings")]
 		public ISingleResult<uspSelectMachineCurrentWinningsResult> uspSelectMachineCurrentWinnings([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> customerID)
 		{
@@ -171,9 +196,9 @@ namespace Plinko_Game
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.uspUpdateCustomerCurrentBalance")]
-		public int uspUpdateCustomerCurrentBalance([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> customerID, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Decimal(19,4)")] System.Nullable<decimal> currentWinnings)
+		public int uspUpdateCustomerCurrentBalance([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> customerID, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Decimal(19,4)")] System.Nullable<decimal> currentBet)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), customerID, currentWinnings);
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), customerID, currentBet);
 			return ((int)(result.ReturnValue));
 		}
 		
@@ -1571,6 +1596,480 @@ namespace Plinko_Game
 		}
 	}
 	
+	public partial class vwFunqSearchCustomerResult
+	{
+		
+		private int _Customer_ID;
+		
+		private string _Customer_Username;
+		
+		private string _Customer_Password;
+		
+		private string _Customer_FirstName;
+		
+		private string _Customer_MiddleName;
+		
+		private string _Customer_LastName;
+		
+		private int _ID_ID;
+		
+		private string _Customer_IDNumber;
+		
+		private string _Customer_PhoneNumber;
+		
+		private decimal _Customer_CurrentBalance;
+		
+		private decimal _Customer_TotalSpent;
+		
+		public vwFunqSearchCustomerResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_ID", DbType="Int NOT NULL")]
+		public int Customer_ID
+		{
+			get
+			{
+				return this._Customer_ID;
+			}
+			set
+			{
+				if ((this._Customer_ID != value))
+				{
+					this._Customer_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_Username", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Customer_Username
+		{
+			get
+			{
+				return this._Customer_Username;
+			}
+			set
+			{
+				if ((this._Customer_Username != value))
+				{
+					this._Customer_Username = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_Password", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Customer_Password
+		{
+			get
+			{
+				return this._Customer_Password;
+			}
+			set
+			{
+				if ((this._Customer_Password != value))
+				{
+					this._Customer_Password = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_FirstName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string Customer_FirstName
+		{
+			get
+			{
+				return this._Customer_FirstName;
+			}
+			set
+			{
+				if ((this._Customer_FirstName != value))
+				{
+					this._Customer_FirstName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_MiddleName", DbType="NVarChar(100)")]
+		public string Customer_MiddleName
+		{
+			get
+			{
+				return this._Customer_MiddleName;
+			}
+			set
+			{
+				if ((this._Customer_MiddleName != value))
+				{
+					this._Customer_MiddleName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_LastName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string Customer_LastName
+		{
+			get
+			{
+				return this._Customer_LastName;
+			}
+			set
+			{
+				if ((this._Customer_LastName != value))
+				{
+					this._Customer_LastName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_ID", DbType="Int NOT NULL")]
+		public int ID_ID
+		{
+			get
+			{
+				return this._ID_ID;
+			}
+			set
+			{
+				if ((this._ID_ID != value))
+				{
+					this._ID_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_IDNumber", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string Customer_IDNumber
+		{
+			get
+			{
+				return this._Customer_IDNumber;
+			}
+			set
+			{
+				if ((this._Customer_IDNumber != value))
+				{
+					this._Customer_IDNumber = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_PhoneNumber", DbType="VarChar(11) NOT NULL", CanBeNull=false)]
+		public string Customer_PhoneNumber
+		{
+			get
+			{
+				return this._Customer_PhoneNumber;
+			}
+			set
+			{
+				if ((this._Customer_PhoneNumber != value))
+				{
+					this._Customer_PhoneNumber = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_CurrentBalance", DbType="Decimal(19,4) NOT NULL")]
+		public decimal Customer_CurrentBalance
+		{
+			get
+			{
+				return this._Customer_CurrentBalance;
+			}
+			set
+			{
+				if ((this._Customer_CurrentBalance != value))
+				{
+					this._Customer_CurrentBalance = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_TotalSpent", DbType="Decimal(19,4) NOT NULL")]
+		public decimal Customer_TotalSpent
+		{
+			get
+			{
+				return this._Customer_TotalSpent;
+			}
+			set
+			{
+				if ((this._Customer_TotalSpent != value))
+				{
+					this._Customer_TotalSpent = value;
+				}
+			}
+		}
+	}
+	
+	public partial class vwFunqAllGameLogsResult
+	{
+		
+		private int _GameLog_ID;
+		
+		private System.DateTime _GameLog_DateTime;
+		
+		private int _Customer_ID;
+		
+		private int _Machine_ID;
+		
+		private int _Game_ID;
+		
+		private int _ErrorCodes_ID;
+		
+		private string _GameLog_Description;
+		
+		private decimal _Machine_CurrentCustomerWinnings;
+		
+		private decimal _Machine_CurrentBalance;
+		
+		public vwFunqAllGameLogsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GameLog_ID", DbType="Int NOT NULL")]
+		public int GameLog_ID
+		{
+			get
+			{
+				return this._GameLog_ID;
+			}
+			set
+			{
+				if ((this._GameLog_ID != value))
+				{
+					this._GameLog_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GameLog_DateTime", DbType="DateTime NOT NULL")]
+		public System.DateTime GameLog_DateTime
+		{
+			get
+			{
+				return this._GameLog_DateTime;
+			}
+			set
+			{
+				if ((this._GameLog_DateTime != value))
+				{
+					this._GameLog_DateTime = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_ID", DbType="Int NOT NULL")]
+		public int Customer_ID
+		{
+			get
+			{
+				return this._Customer_ID;
+			}
+			set
+			{
+				if ((this._Customer_ID != value))
+				{
+					this._Customer_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Machine_ID", DbType="Int NOT NULL")]
+		public int Machine_ID
+		{
+			get
+			{
+				return this._Machine_ID;
+			}
+			set
+			{
+				if ((this._Machine_ID != value))
+				{
+					this._Machine_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Game_ID", DbType="Int NOT NULL")]
+		public int Game_ID
+		{
+			get
+			{
+				return this._Game_ID;
+			}
+			set
+			{
+				if ((this._Game_ID != value))
+				{
+					this._Game_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ErrorCodes_ID", DbType="Int NOT NULL")]
+		public int ErrorCodes_ID
+		{
+			get
+			{
+				return this._ErrorCodes_ID;
+			}
+			set
+			{
+				if ((this._ErrorCodes_ID != value))
+				{
+					this._ErrorCodes_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GameLog_Description", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string GameLog_Description
+		{
+			get
+			{
+				return this._GameLog_Description;
+			}
+			set
+			{
+				if ((this._GameLog_Description != value))
+				{
+					this._GameLog_Description = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Machine_CurrentCustomerWinnings", DbType="Decimal(19,4) NOT NULL")]
+		public decimal Machine_CurrentCustomerWinnings
+		{
+			get
+			{
+				return this._Machine_CurrentCustomerWinnings;
+			}
+			set
+			{
+				if ((this._Machine_CurrentCustomerWinnings != value))
+				{
+					this._Machine_CurrentCustomerWinnings = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Machine_CurrentBalance", DbType="Decimal(19,4) NOT NULL")]
+		public decimal Machine_CurrentBalance
+		{
+			get
+			{
+				return this._Machine_CurrentBalance;
+			}
+			set
+			{
+				if ((this._Machine_CurrentBalance != value))
+				{
+					this._Machine_CurrentBalance = value;
+				}
+			}
+		}
+	}
+	
+	public partial class vwFunqAllMachinesResult
+	{
+		
+		private int _Machine_ID;
+		
+		private int _Game_ID;
+		
+		private decimal _Machine_CurrentBalance;
+		
+		private decimal _Machine_CurrentCustomerWinnings;
+		
+		private int _Customer_ID;
+		
+		public vwFunqAllMachinesResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Machine_ID", DbType="Int NOT NULL")]
+		public int Machine_ID
+		{
+			get
+			{
+				return this._Machine_ID;
+			}
+			set
+			{
+				if ((this._Machine_ID != value))
+				{
+					this._Machine_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Game_ID", DbType="Int NOT NULL")]
+		public int Game_ID
+		{
+			get
+			{
+				return this._Game_ID;
+			}
+			set
+			{
+				if ((this._Game_ID != value))
+				{
+					this._Game_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Machine_CurrentBalance", DbType="Decimal(19,4) NOT NULL")]
+		public decimal Machine_CurrentBalance
+		{
+			get
+			{
+				return this._Machine_CurrentBalance;
+			}
+			set
+			{
+				if ((this._Machine_CurrentBalance != value))
+				{
+					this._Machine_CurrentBalance = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Machine_CurrentCustomerWinnings", DbType="Decimal(19,4) NOT NULL")]
+		public decimal Machine_CurrentCustomerWinnings
+		{
+			get
+			{
+				return this._Machine_CurrentCustomerWinnings;
+			}
+			set
+			{
+				if ((this._Machine_CurrentCustomerWinnings != value))
+				{
+					this._Machine_CurrentCustomerWinnings = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_ID", DbType="Int NOT NULL")]
+		public int Customer_ID
+		{
+			get
+			{
+				return this._Customer_ID;
+			}
+			set
+			{
+				if ((this._Customer_ID != value))
+				{
+					this._Customer_ID = value;
+				}
+			}
+		}
+	}
+	
 	public partial class uspSelectCustomerBalanceResult
 	{
 		
@@ -1592,6 +2091,32 @@ namespace Plinko_Game
 				if ((this._Customer_CurrentBalance != value))
 				{
 					this._Customer_CurrentBalance = value;
+				}
+			}
+		}
+	}
+	
+	public partial class uspSelectMachineBalanceResult
+	{
+		
+		private decimal _Machine_CurrentBalance;
+		
+		public uspSelectMachineBalanceResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Machine_CurrentBalance", DbType="Decimal(19,4) NOT NULL")]
+		public decimal Machine_CurrentBalance
+		{
+			get
+			{
+				return this._Machine_CurrentBalance;
+			}
+			set
+			{
+				if ((this._Machine_CurrentBalance != value))
+				{
+					this._Machine_CurrentBalance = value;
 				}
 			}
 		}

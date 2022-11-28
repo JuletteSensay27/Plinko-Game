@@ -36,6 +36,9 @@ namespace Plinko_Game
         private int nextcustomerID = 0;
         private int playerWager = 0;
         private decimal userBalance = 0;
+        private int machineID = 2;
+        private int gameID = 2;
+        private decimal currentPlayerWinnings = 0;
 
         public MainWindow()
         {
@@ -1004,7 +1007,13 @@ namespace Plinko_Game
                     }
                     else
                     {
+                        var customerIn = (from a in amazonDB.table_Customers
+                                          where a.Customer_Username == txtloginUsername.Text
+                                          select a).FirstOrDefault();
+                        int customerID = customerIn.Customer_ID;
+
                         userBalanceLbl.Content = $"User Balance: {playerBalance - playerWager}";
+                        amazonDB.uspUpdateCustomerCurrentBalance(customerID, decimal.Parse(userWagerTbx.Text.ToString()));
                         this.playerWager = playerWager;
                         userBalance = decimal.Parse(userBalanceLbl.Content.ToString().Split(':')[1]);
                         confirmWagerBtn.IsEnabled = false;
@@ -1017,6 +1026,9 @@ namespace Plinko_Game
 
         private void login()
         {
+
+
+
             var allCustomers = (from b in amazonDB.table_Customers
                                 where b.Customer_Username == txtloginUsername.Text
                                 select b).ToList();
@@ -1025,19 +1037,15 @@ namespace Plinko_Game
                                  where a.Customer_Username == txtloginUsername.Text
                                  select a).FirstOrDefault();
 
-            string[] customers = new string[nextcustomerID+1];
+            string[] customers = new string[nextcustomerID + 1];
             string password = "";
-
-            lblloginstatus.Content = "Login Status : ";
-            uPassStatusLbl.Content = "Password Status : ";
-            uNameStatusLbl.Content = "Username Status: ";
 
             int y = 0;
 
             foreach (var customer in allCustomers)
-            {   
-                    customers[y] = customer.Customer_Username.ToString();
-                    y++;
+            {
+                customers[y] = customer.Customer_Username.ToString();
+                y++;
             }
 
             if (customers.Contains(txtloginUsername.Text))
@@ -1047,6 +1055,7 @@ namespace Plinko_Game
 
                 if (txtloginPassword.Password == password)
                 {
+                    //lblloginstatus.Content = "Login Success";
                     uPassStatusLbl.Content += "Password match";
                     lblloginstatus.Content += "Login Success";
                     userNameLbl.Content += customerLogin.Customer_FirstName;
@@ -1056,8 +1065,15 @@ namespace Plinko_Game
                     subValueBtn.IsEnabled = true;
                     loginBtn.Content = "Log Out";
                     txtloginPassword.Password = string.Empty;
-                    txtloginUsername.Text= string.Empty;
+                    /*txtloginUsername.Text = string.Empty;*/
 
+                    var customerIn = (from a in amazonDB.table_Customers
+                                      where a.Customer_Username == txtloginUsername.Text
+                                      select a).FirstOrDefault();
+
+                    int customerID = customerIn.Customer_ID;
+
+                    checkCustomerIfLoggedIn(customerID);
                 }
                 else
                 {
@@ -1067,9 +1083,36 @@ namespace Plinko_Game
             }
             else
             {
+                DateTime timeLogin = DateTime.Now;
+               amazonDB.uspCreateGameLog(timeLogin, 1, machineID, gameID, 4, "Customer is not found", 0, 0);
                 uNameStatusLbl.Content += "Username Not Found";
                 lblloginstatus.Content += "Login Failed";
+            }
+        }
 
+        private void checkCustomerIfLoggedIn(int customerID)
+        {
+            var current = amazonDB.vwFunqAllMachines().ToList();
+
+            int[] idsLoggedIn = new int[5];
+            int x = 0;
+
+            foreach (var id in current)
+            {
+                idsLoggedIn[x++] = id.Customer_ID;
+            }
+
+            if (idsLoggedIn.Contains(customerID))
+            {
+                MessageBox.Show("User is logged in already in different machine");
+                DateTime timeLogin = DateTime.Now;
+                amazonDB.uspCreateGameLog(timeLogin, customerID, machineID, gameID, 5, "Customer is logged in already", 0, 0);
+            }
+            else
+            {
+                DateTime timeLogin = DateTime.Now;
+                amazonDB.uspCreateGameLog(timeLogin, customerID, machineID, gameID, 1, "Customer <<name>> logged in", 0, 0);
+                amazonDB.uspUpdateMachineCustomer(machineID, customerID);
             }
         }
 
@@ -1104,6 +1147,7 @@ namespace Plinko_Game
             lblloginstatus.Content = "Login Status : ";
             uPassStatusLbl.Content = "Password Status : ";
             uNameStatusLbl.Content = "Username Status: ";
+            amazonDB.uspUpdateMachineCurrentWinnings(machineID, currentPlayerWinnings);
 
         }
 
@@ -1119,48 +1163,48 @@ namespace Plinko_Game
                     switch (i) 
                     {
                         case 0:
-                            playerPrize = playerWager * 10;
-                            userBalance += playerPrize;
+                            playerPrize = playerWager * 10;                        
+                            currentPlayerWinnings += playerPrize;
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 1:
-                            playerPrize = playerWager * 5;
-                            userBalance += playerPrize;
+                            playerPrize = playerWager * 5;                       
+                            currentPlayerWinnings += playerPrize;
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 2:
-                            playerPrize = playerWager * 2;
-                            userBalance += playerPrize;
+                            playerPrize = playerWager * 2;                          
+                            currentPlayerWinnings += playerPrize;
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 3:
-                            playerPrize = playerWager * 0;
-                            userBalance += playerPrize;
+                            playerPrize = playerWager * 0;                           
+                            currentPlayerWinnings += playerPrize;
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 4:
-                            playerPrize = playerWager * 1;
-                            userBalance += playerPrize;
+                            playerPrize = playerWager * 1;                          
+                            currentPlayerWinnings += playerPrize;
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 5:
-                            playerPrize = playerWager * 0;
-                            userBalance += playerPrize;
+                            playerPrize = playerWager * 0;                         
+                            currentPlayerWinnings += playerPrize;
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 6:
-                            playerPrize = playerWager * 2;
-                            userBalance += playerPrize;
+                            playerPrize = playerWager * 2;                           
+                            currentPlayerWinnings += playerPrize;
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 7:
-                            playerPrize = playerWager * 5;
-                            userBalance += playerPrize;
+                            playerPrize = playerWager * 5;                           
+                            currentPlayerWinnings += playerPrize;
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 8:
-                            playerPrize = playerWager * 10;
-                            userBalance += playerPrize;
+                            playerPrize = playerWager * 10;                           
+                            currentPlayerWinnings += playerPrize;
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                     }
