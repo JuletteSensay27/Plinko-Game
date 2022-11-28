@@ -5,21 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Plinko_Game"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="1080" SizeToContent="Height">
+        Title="MainWindow" Height="450" Width="1080" SizeToContent="Height" Closed="mainWindow_Closed" Initialized="mainWindow_Initialized">
     <Grid x:Name="mainGrid">
         <Button x:Name="loginBtn" Content="Log In" HorizontalAlignment="Left" Margin="19,95,0,0" VerticalAlignment="Top" Height="27" Width="92" Click="loginBtn_Click"/>
         <Label x:Name="userNameLbl" Content="Username : " HorizontalAlignment="Left" Margin="19,211,0,0" VerticalAlignment="Top"/>
         <Label x:Name="userBalanceLbl" Content="User Balance : " HorizontalAlignment="Left" Margin="19,242,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="userWagerHeaderLbl" Content="Place Bet Here: " HorizontalAlignment="Left" Margin="21,304,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="subValueBtn" Content="-" HorizontalAlignment="Left" Margin="28,346,0,0" VerticalAlignment="Top" Width="12" Click="subValueBtn_Click"/>
-        <TextBox x:Name="userWagerTbx" HorizontalAlignment="Left" Margin="45,347,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="89"/>
-        <Button x:Name="addValueBtn" Content="+" HorizontalAlignment="Left" Margin="139,346,0,0" VerticalAlignment="Top" Width="12" Click="addValueBtn_Click"/>
-        <Button x:Name="confirmWagerBtn" Content="Place Wager" HorizontalAlignment="Left" Margin="28,383,0,0" VerticalAlignment="Top" Click="confirmWagerBtn_Click"/>
+        <Label x:Name="userWagerHeaderLbl" Content="Place Bet Here: " HorizontalAlignment="Left" Margin="21,314,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="subValueBtn" Content="-" HorizontalAlignment="Left" Margin="28,356,0,0" VerticalAlignment="Top" Width="12" Click="subValueBtn_Click"/>
+        <TextBox x:Name="userWagerTbx" HorizontalAlignment="Left" Margin="45,357,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="89"/>
+        <Button x:Name="addValueBtn" Content="+" HorizontalAlignment="Left" Margin="139,356,0,0" VerticalAlignment="Top" Width="12" Click="addValueBtn_Click"/>
+        <Button x:Name="confirmWagerBtn" Content="Place Wager" HorizontalAlignment="Left" Margin="28,393,0,0" VerticalAlignment="Top" Click="confirmWagerBtn_Click"/>
         <TextBox x:Name="txtloginUsername" HorizontalAlignment="Left" Margin="19,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <PasswordBox x:Name="txtloginPassword" HorizontalAlignment="Left" Margin="19,62,0,0" VerticalAlignment="Top" Width="120"/>
         <Label x:Name="lblloginstatus" Content="Log In Status : " HorizontalAlignment="Left" Margin="19,141,0,0" VerticalAlignment="Top"/>
         <Label x:Name="uNameStatusLbl" Content="Username Status : " HorizontalAlignment="Left" Margin="166,26,0,0" VerticalAlignment="Top"/>
         <Label x:Name="uPassStatusLbl" Content="Password Status : " HorizontalAlignment="Left" Margin="166,58,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="userWinningsLbl" Content="User Winnings : " HorizontalAlignment="Left" Margin="21,283,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="userNameHolLbl" Content="" HorizontalAlignment="Left" Margin="307,26,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
 
     </Grid>
 </Window>

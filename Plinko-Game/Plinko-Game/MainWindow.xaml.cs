@@ -39,19 +39,36 @@ namespace Plinko_Game
         private int machineID = 2;
         private int gameID = 2;
         private decimal currentPlayerWinnings = 0;
+        private Dictionary<string , List<Object>> logsCont = new Dictionary<string, List<Object>>();
+        private int logCounter = 0;
 
         public MainWindow()
         {
-            InitializeComponent();
-            initGameBoard();
-            if (userNameLbl.Content.ToString().Split(':')[1] == " ") 
-            {
-                confirmWagerBtn.IsEnabled = false;
-                addValueBtn.IsEnabled = false;
-                subValueBtn.IsEnabled = false;  
-                gameButton.IsEnabled = false;
+             InitializeComponent();
+             initGameBoard();
+             if (userNameLbl.Content.ToString().Split(':')[1] == " ")
+             {
+                 confirmWagerBtn.IsEnabled = false;
+                 addValueBtn.IsEnabled = false;
+                 subValueBtn.IsEnabled = false;
+                 gameButton.IsEnabled = false;
 
+             }
+           
+        }
+
+        private decimal getMachineBal() 
+        {
+            var bal = amazonDB.uspSelectMachineBalance(machineID);
+            decimal MachineBalance = 0;
+
+            foreach (var el in bal) 
+            {
+                MachineBalance = el.Machine_CurrentBalance;
             }
+
+            return MachineBalance;
+            
         }
 
         private void initGameBoard() 
@@ -1008,7 +1025,7 @@ namespace Plinko_Game
                     else
                     {
                         var customerIn = (from a in amazonDB.table_Customers
-                                          where a.Customer_Username == txtloginUsername.Text
+                                          where a.Customer_Username == userNameHolLbl.Content.ToString()
                                           select a).FirstOrDefault();
                         int customerID = customerIn.Customer_ID;
 
@@ -1026,8 +1043,6 @@ namespace Plinko_Game
 
         private void login()
         {
-
-
 
             var allCustomers = (from b in amazonDB.table_Customers
                                 where b.Customer_Username == txtloginUsername.Text
@@ -1056,6 +1071,10 @@ namespace Plinko_Game
                 if (txtloginPassword.Password == password)
                 {
                     //lblloginstatus.Content = "Login Success";
+                    userNameHolLbl.Content = txtloginUsername.Text;
+                    lblloginstatus.Content = "Login Status : ";
+                    uPassStatusLbl.Content = "Password Status : ";
+                    uNameStatusLbl.Content = "Username Status: ";
                     uPassStatusLbl.Content += "Password match";
                     lblloginstatus.Content += "Login Success";
                     userNameLbl.Content += customerLogin.Customer_FirstName;
@@ -1065,10 +1084,10 @@ namespace Plinko_Game
                     subValueBtn.IsEnabled = true;
                     loginBtn.Content = "Log Out";
                     txtloginPassword.Password = string.Empty;
-                    /*txtloginUsername.Text = string.Empty;*/
+                    txtloginUsername.Text = string.Empty;
 
                     var customerIn = (from a in amazonDB.table_Customers
-                                      where a.Customer_Username == txtloginUsername.Text
+                                      where a.Customer_Username == userNameHolLbl.Content.ToString()
                                       select a).FirstOrDefault();
 
                     int customerID = customerIn.Customer_ID;
@@ -1111,7 +1130,7 @@ namespace Plinko_Game
             else
             {
                 DateTime timeLogin = DateTime.Now;
-                amazonDB.uspCreateGameLog(timeLogin, customerID, machineID, gameID, 1, "Customer <<name>> logged in", 0, 0);
+                amazonDB.uspCreateGameLog(timeLogin, customerID, machineID, gameID, 1, $"Customer {customerID} logged in", 0, 0);
                 amazonDB.uspUpdateMachineCustomer(machineID, customerID);
             }
         }
@@ -1147,6 +1166,7 @@ namespace Plinko_Game
             lblloginstatus.Content = "Login Status : ";
             uPassStatusLbl.Content = "Password Status : ";
             uNameStatusLbl.Content = "Username Status: ";
+            userWinningsLbl.Content = "User Winnings : ";
             amazonDB.uspUpdateMachineCurrentWinnings(machineID, currentPlayerWinnings);
 
         }
@@ -1210,6 +1230,62 @@ namespace Plinko_Game
                     }
                 }
             }
+
+            userWinningsLbl.Content = $"User Winnings : {currentPlayerWinnings.ToString()}" ;
+        }
+
+        private void mainWindow_Closed(object sender, EventArgs e)
+        {
+            if (userNameHolLbl.Content.ToString() != String.Empty) 
+            {
+                amazonDB.uspUpdateMachineCurrentWinnings(machineID, currentPlayerWinnings);
+            }
+        }
+
+        private void mainWindow_Initialized(object sender, EventArgs e)
+        {
+            decimal balCheck = 10000;
+            if (getMachineBal() <= balCheck)
+            {
+                MessageBox.Show("MACHINE FUNDS RUNNING LOW! MAINTENANCE NEEDED!");
+                Environment.Exit(0);
+            }
+        }
+
+        private void createLog(DateTime date, int CID, int MID, int GID, int EID, string GLC, decimal CW, decimal MCB) 
+        {
+            /*
+             * Game Logs Components
+             * 
+             * DateTime
+             * CustomerID
+             * MachineID
+             * gameID
+             * errorID
+             * gamelogComments
+             * customerWinnings
+             * machineCurrentBalance
+             */
+            
+            List<Object> logsHol = new List<Object>();
+
+            logsHol.Add(date);
+            logsHol.Add(CID);
+            logsHol.Add(MID);
+            logsHol.Add(GID);
+            logsHol.Add(EID);
+            logsHol.Add(GLC);
+            logsHol.Add(CW);
+            logsHol.Add(MCB);
+
+            logsCont.Add($"log{logCounter+1}",logsHol);
+            logCounter++;
+
+        }
+
+        private void pushLogToDB() 
+        {
+            
         }
     }
 }

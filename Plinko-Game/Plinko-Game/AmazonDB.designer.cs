@@ -30,6 +30,9 @@ namespace Plinko_Game
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void Inserttable_Machine(table_Machine instance);
+    partial void Updatetable_Machine(table_Machine instance);
+    partial void Deletetable_Machine(table_Machine instance);
     partial void Inserttable_Customer(table_Customer instance);
     partial void Updatetable_Customer(table_Customer instance);
     partial void Deletetable_Customer(table_Customer instance);
@@ -45,9 +48,6 @@ namespace Plinko_Game
     partial void Inserttable_ID(table_ID instance);
     partial void Updatetable_ID(table_ID instance);
     partial void Deletetable_ID(table_ID instance);
-    partial void Inserttable_Machine(table_Machine instance);
-    partial void Updatetable_Machine(table_Machine instance);
-    partial void Deletetable_Machine(table_Machine instance);
     #endregion
 		
 		public AmazonDBDataContext() : 
@@ -78,6 +78,14 @@ namespace Plinko_Game
 				base(connection, mappingSource)
 		{
 			OnCreated();
+		}
+		
+		public System.Data.Linq.Table<table_Machine> table_Machines
+		{
+			get
+			{
+				return this.GetTable<table_Machine>();
+			}
 		}
 		
 		public System.Data.Linq.Table<table_Customer> table_Customers
@@ -117,14 +125,6 @@ namespace Plinko_Game
 			get
 			{
 				return this.GetTable<table_ID>();
-			}
-		}
-		
-		public System.Data.Linq.Table<table_Machine> table_Machines
-		{
-			get
-			{
-				return this.GetTable<table_Machine>();
 			}
 		}
 		
@@ -228,6 +228,274 @@ namespace Plinko_Game
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), machineID, gameID);
 			return ((int)(result.ReturnValue));
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.table_Machines")]
+	public partial class table_Machine : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Machine_ID;
+		
+		private int _Game_ID;
+		
+		private decimal _Machine_CurrentBalance;
+		
+		private decimal _Machine_CurrentCustomerWinnings;
+		
+		private int _Customer_ID;
+		
+		private EntitySet<table_GameLog> _table_GameLogs;
+		
+		private EntityRef<table_Customer> _table_Customer;
+		
+		private EntityRef<table_Game> _table_Game;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnMachine_IDChanging(int value);
+    partial void OnMachine_IDChanged();
+    partial void OnGame_IDChanging(int value);
+    partial void OnGame_IDChanged();
+    partial void OnMachine_CurrentBalanceChanging(decimal value);
+    partial void OnMachine_CurrentBalanceChanged();
+    partial void OnMachine_CurrentCustomerWinningsChanging(decimal value);
+    partial void OnMachine_CurrentCustomerWinningsChanged();
+    partial void OnCustomer_IDChanging(int value);
+    partial void OnCustomer_IDChanged();
+    #endregion
+		
+		public table_Machine()
+		{
+			this._table_GameLogs = new EntitySet<table_GameLog>(new Action<table_GameLog>(this.attach_table_GameLogs), new Action<table_GameLog>(this.detach_table_GameLogs));
+			this._table_Customer = default(EntityRef<table_Customer>);
+			this._table_Game = default(EntityRef<table_Game>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Machine_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Machine_ID
+		{
+			get
+			{
+				return this._Machine_ID;
+			}
+			set
+			{
+				if ((this._Machine_ID != value))
+				{
+					this.OnMachine_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Machine_ID = value;
+					this.SendPropertyChanged("Machine_ID");
+					this.OnMachine_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Game_ID", DbType="Int NOT NULL")]
+		public int Game_ID
+		{
+			get
+			{
+				return this._Game_ID;
+			}
+			set
+			{
+				if ((this._Game_ID != value))
+				{
+					if (this._table_Game.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnGame_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Game_ID = value;
+					this.SendPropertyChanged("Game_ID");
+					this.OnGame_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Machine_CurrentBalance", DbType="Decimal(19,4) NOT NULL")]
+		public decimal Machine_CurrentBalance
+		{
+			get
+			{
+				return this._Machine_CurrentBalance;
+			}
+			set
+			{
+				if ((this._Machine_CurrentBalance != value))
+				{
+					this.OnMachine_CurrentBalanceChanging(value);
+					this.SendPropertyChanging();
+					this._Machine_CurrentBalance = value;
+					this.SendPropertyChanged("Machine_CurrentBalance");
+					this.OnMachine_CurrentBalanceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Machine_CurrentCustomerWinnings", DbType="Decimal(19,4) NOT NULL")]
+		public decimal Machine_CurrentCustomerWinnings
+		{
+			get
+			{
+				return this._Machine_CurrentCustomerWinnings;
+			}
+			set
+			{
+				if ((this._Machine_CurrentCustomerWinnings != value))
+				{
+					this.OnMachine_CurrentCustomerWinningsChanging(value);
+					this.SendPropertyChanging();
+					this._Machine_CurrentCustomerWinnings = value;
+					this.SendPropertyChanged("Machine_CurrentCustomerWinnings");
+					this.OnMachine_CurrentCustomerWinningsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_ID", DbType="Int NOT NULL")]
+		public int Customer_ID
+		{
+			get
+			{
+				return this._Customer_ID;
+			}
+			set
+			{
+				if ((this._Customer_ID != value))
+				{
+					if (this._table_Customer.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCustomer_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Customer_ID = value;
+					this.SendPropertyChanged("Customer_ID");
+					this.OnCustomer_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="table_Machine_table_GameLog", Storage="_table_GameLogs", ThisKey="Machine_ID", OtherKey="Machine_ID")]
+		public EntitySet<table_GameLog> table_GameLogs
+		{
+			get
+			{
+				return this._table_GameLogs;
+			}
+			set
+			{
+				this._table_GameLogs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="table_Customer_table_Machine", Storage="_table_Customer", ThisKey="Customer_ID", OtherKey="Customer_ID", IsForeignKey=true)]
+		public table_Customer table_Customer
+		{
+			get
+			{
+				return this._table_Customer.Entity;
+			}
+			set
+			{
+				table_Customer previousValue = this._table_Customer.Entity;
+				if (((previousValue != value) 
+							|| (this._table_Customer.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._table_Customer.Entity = null;
+						previousValue.table_Machines.Remove(this);
+					}
+					this._table_Customer.Entity = value;
+					if ((value != null))
+					{
+						value.table_Machines.Add(this);
+						this._Customer_ID = value.Customer_ID;
+					}
+					else
+					{
+						this._Customer_ID = default(int);
+					}
+					this.SendPropertyChanged("table_Customer");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="table_Game_table_Machine", Storage="_table_Game", ThisKey="Game_ID", OtherKey="Game_ID", IsForeignKey=true)]
+		public table_Game table_Game
+		{
+			get
+			{
+				return this._table_Game.Entity;
+			}
+			set
+			{
+				table_Game previousValue = this._table_Game.Entity;
+				if (((previousValue != value) 
+							|| (this._table_Game.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._table_Game.Entity = null;
+						previousValue.table_Machines.Remove(this);
+					}
+					this._table_Game.Entity = value;
+					if ((value != null))
+					{
+						value.table_Machines.Add(this);
+						this._Game_ID = value.Game_ID;
+					}
+					else
+					{
+						this._Game_ID = default(int);
+					}
+					this.SendPropertyChanged("table_Game");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_table_GameLogs(table_GameLog entity)
+		{
+			this.SendPropertyChanging();
+			entity.table_Machine = this;
+		}
+		
+		private void detach_table_GameLogs(table_GameLog entity)
+		{
+			this.SendPropertyChanging();
+			entity.table_Machine = null;
 		}
 	}
 	
@@ -1325,274 +1593,6 @@ namespace Plinko_Game
 		{
 			this.SendPropertyChanging();
 			entity.table_ID = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.table_Machines")]
-	public partial class table_Machine : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Machine_ID;
-		
-		private int _Game_ID;
-		
-		private decimal _Machine_CurrentBalance;
-		
-		private decimal _Machine_CurrentCustomerWinnings;
-		
-		private int _Customer_ID;
-		
-		private EntitySet<table_GameLog> _table_GameLogs;
-		
-		private EntityRef<table_Customer> _table_Customer;
-		
-		private EntityRef<table_Game> _table_Game;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnMachine_IDChanging(int value);
-    partial void OnMachine_IDChanged();
-    partial void OnGame_IDChanging(int value);
-    partial void OnGame_IDChanged();
-    partial void OnMachine_CurrentBalanceChanging(decimal value);
-    partial void OnMachine_CurrentBalanceChanged();
-    partial void OnMachine_CurrentCustomerWinningsChanging(decimal value);
-    partial void OnMachine_CurrentCustomerWinningsChanged();
-    partial void OnCustomer_IDChanging(int value);
-    partial void OnCustomer_IDChanged();
-    #endregion
-		
-		public table_Machine()
-		{
-			this._table_GameLogs = new EntitySet<table_GameLog>(new Action<table_GameLog>(this.attach_table_GameLogs), new Action<table_GameLog>(this.detach_table_GameLogs));
-			this._table_Customer = default(EntityRef<table_Customer>);
-			this._table_Game = default(EntityRef<table_Game>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Machine_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Machine_ID
-		{
-			get
-			{
-				return this._Machine_ID;
-			}
-			set
-			{
-				if ((this._Machine_ID != value))
-				{
-					this.OnMachine_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Machine_ID = value;
-					this.SendPropertyChanged("Machine_ID");
-					this.OnMachine_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Game_ID", DbType="Int NOT NULL")]
-		public int Game_ID
-		{
-			get
-			{
-				return this._Game_ID;
-			}
-			set
-			{
-				if ((this._Game_ID != value))
-				{
-					if (this._table_Game.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnGame_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Game_ID = value;
-					this.SendPropertyChanged("Game_ID");
-					this.OnGame_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Machine_CurrentBalance", DbType="Decimal(19,4) NOT NULL")]
-		public decimal Machine_CurrentBalance
-		{
-			get
-			{
-				return this._Machine_CurrentBalance;
-			}
-			set
-			{
-				if ((this._Machine_CurrentBalance != value))
-				{
-					this.OnMachine_CurrentBalanceChanging(value);
-					this.SendPropertyChanging();
-					this._Machine_CurrentBalance = value;
-					this.SendPropertyChanged("Machine_CurrentBalance");
-					this.OnMachine_CurrentBalanceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Machine_CurrentCustomerWinnings", DbType="Decimal(19,4) NOT NULL")]
-		public decimal Machine_CurrentCustomerWinnings
-		{
-			get
-			{
-				return this._Machine_CurrentCustomerWinnings;
-			}
-			set
-			{
-				if ((this._Machine_CurrentCustomerWinnings != value))
-				{
-					this.OnMachine_CurrentCustomerWinningsChanging(value);
-					this.SendPropertyChanging();
-					this._Machine_CurrentCustomerWinnings = value;
-					this.SendPropertyChanged("Machine_CurrentCustomerWinnings");
-					this.OnMachine_CurrentCustomerWinningsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_ID", DbType="Int NOT NULL")]
-		public int Customer_ID
-		{
-			get
-			{
-				return this._Customer_ID;
-			}
-			set
-			{
-				if ((this._Customer_ID != value))
-				{
-					if (this._table_Customer.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCustomer_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Customer_ID = value;
-					this.SendPropertyChanged("Customer_ID");
-					this.OnCustomer_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="table_Machine_table_GameLog", Storage="_table_GameLogs", ThisKey="Machine_ID", OtherKey="Machine_ID")]
-		public EntitySet<table_GameLog> table_GameLogs
-		{
-			get
-			{
-				return this._table_GameLogs;
-			}
-			set
-			{
-				this._table_GameLogs.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="table_Customer_table_Machine", Storage="_table_Customer", ThisKey="Customer_ID", OtherKey="Customer_ID", IsForeignKey=true)]
-		public table_Customer table_Customer
-		{
-			get
-			{
-				return this._table_Customer.Entity;
-			}
-			set
-			{
-				table_Customer previousValue = this._table_Customer.Entity;
-				if (((previousValue != value) 
-							|| (this._table_Customer.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._table_Customer.Entity = null;
-						previousValue.table_Machines.Remove(this);
-					}
-					this._table_Customer.Entity = value;
-					if ((value != null))
-					{
-						value.table_Machines.Add(this);
-						this._Customer_ID = value.Customer_ID;
-					}
-					else
-					{
-						this._Customer_ID = default(int);
-					}
-					this.SendPropertyChanged("table_Customer");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="table_Game_table_Machine", Storage="_table_Game", ThisKey="Game_ID", OtherKey="Game_ID", IsForeignKey=true)]
-		public table_Game table_Game
-		{
-			get
-			{
-				return this._table_Game.Entity;
-			}
-			set
-			{
-				table_Game previousValue = this._table_Game.Entity;
-				if (((previousValue != value) 
-							|| (this._table_Game.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._table_Game.Entity = null;
-						previousValue.table_Machines.Remove(this);
-					}
-					this._table_Game.Entity = value;
-					if ((value != null))
-					{
-						value.table_Machines.Add(this);
-						this._Game_ID = value.Game_ID;
-					}
-					else
-					{
-						this._Game_ID = default(int);
-					}
-					this.SendPropertyChanged("table_Game");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_table_GameLogs(table_GameLog entity)
-		{
-			this.SendPropertyChanging();
-			entity.table_Machine = this;
-		}
-		
-		private void detach_table_GameLogs(table_GameLog entity)
-		{
-			this.SendPropertyChanging();
-			entity.table_Machine = null;
 		}
 	}
 	

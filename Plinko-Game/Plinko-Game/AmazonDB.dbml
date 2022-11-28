@@ -1,5 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Group 2 - Casino" Class="AmazonDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=brent.ceeszjwt7h7h.ap-southeast-1.rds.amazonaws.com;Initial Catalog=&quot;Group 2 - Casino&quot;;User ID=admin;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="Plinko_Game.Properties.Settings" SettingsPropertyName="Group_2___CasinoConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.table_Machines" Member="table_Machines">
+    <Type Name="table_Machine">
+      <Column Name="Machine_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Game_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Machine_CurrentBalance" Type="System.Decimal" DbType="Decimal(19,4) NOT NULL" CanBeNull="false" />
+      <Column Name="Machine_CurrentCustomerWinnings" Type="System.Decimal" DbType="Decimal(19,4) NOT NULL" CanBeNull="false" />
+      <Column Name="Customer_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="table_Machine_table_GameLog" Member="table_GameLogs" ThisKey="Machine_ID" OtherKey="Machine_ID" Type="table_GameLog" />
+      <Association Name="table_Customer_table_Machine" Member="table_Customer" ThisKey="Customer_ID" OtherKey="Customer_ID" Type="table_Customer" IsForeignKey="true" />
+      <Association Name="table_Game_table_Machine" Member="table_Game" ThisKey="Game_ID" OtherKey="Game_ID" Type="table_Game" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.table_Customers" Member="table_Customers">
     <Type Name="table_Customer">
       <Column Name="Customer_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -53,18 +65,6 @@
       <Column Name="ID_Type" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="ID_Description" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Association Name="table_ID_table_Customer" Member="table_Customers" ThisKey="ID_ID" OtherKey="ID_ID" Type="table_Customer" />
-    </Type>
-  </Table>
-  <Table Name="dbo.table_Machines" Member="table_Machines">
-    <Type Name="table_Machine">
-      <Column Name="Machine_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Game_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Machine_CurrentBalance" Type="System.Decimal" DbType="Decimal(19,4) NOT NULL" CanBeNull="false" />
-      <Column Name="Machine_CurrentCustomerWinnings" Type="System.Decimal" DbType="Decimal(19,4) NOT NULL" CanBeNull="false" />
-      <Column Name="Customer_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="table_Machine_table_GameLog" Member="table_GameLogs" ThisKey="Machine_ID" OtherKey="Machine_ID" Type="table_GameLog" />
-      <Association Name="table_Customer_table_Machine" Member="table_Customer" ThisKey="Customer_ID" OtherKey="Customer_ID" Type="table_Customer" IsForeignKey="true" />
-      <Association Name="table_Game_table_Machine" Member="table_Game" ThisKey="Game_ID" OtherKey="Game_ID" Type="table_Game" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.vwFunqSearchCustomer" Method="vwFunqSearchCustomer" IsComposable="true">
