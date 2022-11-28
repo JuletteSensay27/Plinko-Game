@@ -954,6 +954,12 @@ namespace Plinko_Game
             string message = "Do you wish to proceed with this operation?";
             string caption = "PLACING WAGER";
             var confirm = MessageBox.Show(message, caption, MessageBoxButton.YesNo);
+            DateTime timeLogin = DateTime.Now;
+            var customerIn = (from a in amazonDB.table_Customers
+                              where a.Customer_Username == userNameHolLbl.Content.ToString()
+                              select a).FirstOrDefault();
+            int customerID = customerIn.Customer_ID;
+            string logComment = string.Empty;
 
             if (confirm == MessageBoxResult.Yes) 
             {
@@ -999,7 +1005,8 @@ namespace Plinko_Game
                                     break;
                             }
                         }
-
+                        logComment = "Insufficient Balance";
+                        createLog(timeLogin, customerID, machineID, gameID, 2, logComment , currentPlayerWinnings , getMachineBal());    
                         MessageBox.Show(formatErrMessage(errorMessage));
                     }
                     else if (playerWager < 1)
@@ -1024,11 +1031,7 @@ namespace Plinko_Game
                     }
                     else
                     {
-                        var customerIn = (from a in amazonDB.table_Customers
-                                          where a.Customer_Username == userNameHolLbl.Content.ToString()
-                                          select a).FirstOrDefault();
-                        int customerID = customerIn.Customer_ID;
-
+                      
                         userBalanceLbl.Content = $"User Balance: {playerBalance - playerWager}";
                         amazonDB.uspUpdateCustomerCurrentBalance(customerID, decimal.Parse(userWagerTbx.Text.ToString()));
                         this.playerWager = playerWager;
@@ -1043,7 +1046,7 @@ namespace Plinko_Game
 
         private void login()
         {
-
+         
             var allCustomers = (from b in amazonDB.table_Customers
                                 where b.Customer_Username == txtloginUsername.Text
                                 select b).ToList();
@@ -1067,10 +1070,25 @@ namespace Plinko_Game
             {
                 uNameStatusLbl.Content += "Username Found";
                 password = customerLogin.Customer_Password.ToString();
-
+                
                 if (txtloginPassword.Password == password)
                 {
                     //lblloginstatus.Content = "Login Success";
+                    /*
+                     * Game Logs Components
+                     * 
+                     * DateTime
+                     * CustomerID
+                     * MachineID
+                     * gameID
+                     * errorID
+                     * gamelogComments
+                     * customerWinnings
+                     * machineCurrentBalance
+                     */
+
+                    DateTime timeLogin = DateTime.Now;
+
                     userNameHolLbl.Content = txtloginUsername.Text;
                     lblloginstatus.Content = "Login Status : ";
                     uPassStatusLbl.Content = "Password Status : ";
@@ -1093,6 +1111,7 @@ namespace Plinko_Game
                     int customerID = customerIn.Customer_ID;
 
                     checkCustomerIfLoggedIn(customerID);
+                    createLog(timeLogin, customerID, machineID, gameID, 1, $"Customer {customerID} has logged in", 0, getMachineBal());
                 }
                 else
                 {
@@ -1156,6 +1175,14 @@ namespace Plinko_Game
 
         private void logout() 
         {
+            DateTime timeLogin = DateTime.Now;
+            var customerIn = (from a in amazonDB.table_Customers
+                              where a.Customer_Username == userNameHolLbl.Content.ToString()
+                              select a).FirstOrDefault();
+
+            int customerID = customerIn.Customer_ID;
+
+
             userBalanceLbl.Content = "User Balance : ";
             userNameLbl.Content = "Username : ";
             confirmWagerBtn.IsEnabled = false;
@@ -1167,7 +1194,10 @@ namespace Plinko_Game
             uPassStatusLbl.Content = "Password Status : ";
             uNameStatusLbl.Content = "Username Status: ";
             userWinningsLbl.Content = "User Winnings : ";
+            userNameHolLbl.Content = string.Empty;
             amazonDB.uspUpdateMachineCurrentWinnings(machineID, currentPlayerWinnings);
+            createLog(timeLogin, customerID, machineID, gameID, 2, $"Customer {customerID} has logged out", currentPlayerWinnings, getMachineBal());
+            pushLogToDB();
 
         }
 
@@ -1175,6 +1205,13 @@ namespace Plinko_Game
         {
 
             decimal playerPrize = 0;
+            DateTime timeLogin = DateTime.Now;
+            var customerIn = (from a in amazonDB.table_Customers
+                              where a.Customer_Username == userNameHolLbl.Content.ToString()
+                              select a).FirstOrDefault();
+
+            int customerID = customerIn.Customer_ID;
+            string logComment = string.Empty;
 
             for (int i = 0; i < prizeRow.Length; i++) 
             {
@@ -1185,46 +1222,55 @@ namespace Plinko_Game
                         case 0:
                             playerPrize = playerWager * 10;                        
                             currentPlayerWinnings += playerPrize;
+                            logComment = $"Customer {customerIn.Customer_FirstName} won ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 1:
                             playerPrize = playerWager * 5;                       
                             currentPlayerWinnings += playerPrize;
+                            logComment = $"Customer {customerIn.Customer_FirstName} won ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 2:
                             playerPrize = playerWager * 2;                          
                             currentPlayerWinnings += playerPrize;
+                            logComment = $"Customer {customerIn.Customer_FirstName} won ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 3:
                             playerPrize = playerWager * 0;                           
                             currentPlayerWinnings += playerPrize;
+                            logComment = $"Customer {customerIn.Customer_FirstName} lost ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 4:
                             playerPrize = playerWager * 1;                          
                             currentPlayerWinnings += playerPrize;
+                            logComment = $"Customer {customerIn.Customer_FirstName} broke even ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 5:
                             playerPrize = playerWager * 0;                         
                             currentPlayerWinnings += playerPrize;
+                            logComment = $"Customer {customerIn.Customer_FirstName} lost ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 6:
                             playerPrize = playerWager * 2;                           
                             currentPlayerWinnings += playerPrize;
+                            logComment = $"Customer {customerIn.Customer_FirstName} won ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 7:
                             playerPrize = playerWager * 5;                           
                             currentPlayerWinnings += playerPrize;
+                            logComment = $"Customer {customerIn.Customer_FirstName} won ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 8:
                             playerPrize = playerWager * 10;                           
                             currentPlayerWinnings += playerPrize;
+                            logComment = $"Customer {customerIn.Customer_FirstName} won ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                     }
@@ -1232,6 +1278,8 @@ namespace Plinko_Game
             }
 
             userWinningsLbl.Content = $"User Winnings : {currentPlayerWinnings.ToString()}" ;
+
+            createLog(timeLogin, customerID, machineID, gameID, 2, logComment, currentPlayerWinnings, getMachineBal());
         }
 
         private void mainWindow_Closed(object sender, EventArgs e)
@@ -1285,7 +1333,21 @@ namespace Plinko_Game
 
         private void pushLogToDB() 
         {
-            
+            for (int i = 0; i < logsCont.Count; i++) 
+            {
+                int x = 0;
+
+                    amazonDB.uspCreateGameLog(
+                            DateTime.Parse(logsCont.Values.ElementAt(i).ElementAt(x).ToString()),
+                            int.Parse(logsCont.Values.ElementAt(i).ElementAt(x+1).ToString()),
+                            int.Parse(logsCont.Values.ElementAt(i).ElementAt(x+2).ToString()),
+                            int.Parse(logsCont.Values.ElementAt(i).ElementAt(x+3).ToString()),
+                            int.Parse(logsCont.Values.ElementAt(i).ElementAt(x+4).ToString()),
+                            logsCont.Values.ElementAt(i).ElementAt(x+5).ToString(),
+                            decimal.Parse(logsCont.Values.ElementAt(i).ElementAt(x+6).ToString()),
+                            decimal.Parse(logsCont.Values.ElementAt(i).ElementAt(x+7).ToString())
+                        );
+            }
         }
     }
 }
