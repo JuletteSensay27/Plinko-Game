@@ -41,6 +41,7 @@ namespace Plinko_Game
         private decimal currentPlayerWinnings = 0;
         private Dictionary<string , List<Object>> logsCont = new Dictionary<string, List<Object>>();
         private int logCounter = 0;
+        private int totalWager = 0;
 
         public MainWindow()
         {
@@ -1031,7 +1032,10 @@ namespace Plinko_Game
                     {
                       
                         userBalanceLbl.Content = $"User Balance: {playerBalance - playerWager}";
+                        totalWager += playerWager;
+                        logComment = $"Customer Wagered {playerWager}";
                         amazonDB.uspUpdateCustomerCurrentBalance(customerID, decimal.Parse(userWagerTbx.Text.ToString()));
+                        createLog(timeLogin, customerID, machineID, gameID, 1, logComment, currentPlayerWinnings, getMachineBal());
                         this.playerWager = playerWager;
                         userBalance = decimal.Parse(userBalanceLbl.Content.ToString().Split(':')[1]);
                         confirmWagerBtn.IsEnabled = false;
@@ -1195,8 +1199,10 @@ namespace Plinko_Game
             userWinningsLbl.Content = "User Winnings : ";
             userNameHolLbl.Content = string.Empty;
             amazonDB.uspUpdateMachineCurrentWinnings(machineID, currentPlayerWinnings);
+            amazonDB.uspUpdateMachineBalance(machineID, (decimal)totalWager);
             amazonDB.uspUpdateMachineCustomer(machineID, 1);
-            createLog(timeLogin, customerID, machineID, gameID, 2, $"Customer {customerID} has logged out", currentPlayerWinnings, getMachineBal());
+            createLog(timeLogin, 1, machineID, gameID, 1, $"Machine Balance has increased by {totalWager}", currentPlayerWinnings, getMachineBal());
+            createLog(timeLogin, customerID, machineID, gameID, 1, $"Customer {customerID} has logged out", currentPlayerWinnings, getMachineBal());
             pushLogToDB();
 
         }
@@ -1279,7 +1285,7 @@ namespace Plinko_Game
 
             userWinningsLbl.Content = $"User Winnings : {currentPlayerWinnings.ToString()}" ;
 
-            createLog(timeLogin, customerID, machineID, gameID, 2, logComment, currentPlayerWinnings, getMachineBal());
+            createLog(timeLogin, customerID, machineID, gameID, 1, logComment, currentPlayerWinnings, getMachineBal());
         }
 
         private void mainWindow_Closed(object sender, EventArgs e)
