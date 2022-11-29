@@ -59,13 +59,11 @@ namespace Plinko_Game
 
         private decimal getMachineBal() 
         {
-            var bal = amazonDB.uspSelectMachineBalance(machineID);
+            var bal = (from a in amazonDB.table_Machines where a.Machine_ID == machineID select a).FirstOrDefault();
+
             decimal MachineBalance = 0;
 
-            foreach (var el in bal) 
-            {
-                MachineBalance = el.Machine_CurrentBalance;
-            }
+            MachineBalance = bal.Machine_CurrentBalance;
 
             return MachineBalance;
             
@@ -1111,7 +1109,7 @@ namespace Plinko_Game
                     int customerID = customerIn.Customer_ID;
 
                     checkCustomerIfLoggedIn(customerID);
-                    createLog(timeLogin, customerID, machineID, gameID, 1, $"Customer {customerID} has logged in", 0, getMachineBal());
+                  
                 }
                 else
                 {
@@ -1144,12 +1142,13 @@ namespace Plinko_Game
             {
                 MessageBox.Show("User is logged in already in different machine");
                 DateTime timeLogin = DateTime.Now;
-                amazonDB.uspCreateGameLog(timeLogin, customerID, machineID, gameID, 5, "Customer is logged in already", 0, 0);
+                amazonDB.uspCreateGameLog(timeLogin, customerID, machineID, gameID, 5, "Customer is logged in already", 0, getMachineBal());
+                this.Close();
             }
             else
             {
                 DateTime timeLogin = DateTime.Now;
-                amazonDB.uspCreateGameLog(timeLogin, customerID, machineID, gameID, 1, $"Customer {customerID} logged in", 0, 0);
+                createLog(timeLogin, customerID, machineID, gameID, 1, $"Customer {customerID} has logged in", 0, getMachineBal());
                 amazonDB.uspUpdateMachineCustomer(machineID, customerID);
             }
         }
@@ -1196,6 +1195,7 @@ namespace Plinko_Game
             userWinningsLbl.Content = "User Winnings : ";
             userNameHolLbl.Content = string.Empty;
             amazonDB.uspUpdateMachineCurrentWinnings(machineID, currentPlayerWinnings);
+            amazonDB.uspUpdateMachineCustomer(machineID, 1);
             createLog(timeLogin, customerID, machineID, gameID, 2, $"Customer {customerID} has logged out", currentPlayerWinnings, getMachineBal());
             pushLogToDB();
 
@@ -1292,11 +1292,15 @@ namespace Plinko_Game
 
         private void mainWindow_Initialized(object sender, EventArgs e)
         {
-            decimal balCheck = 10000;
-            if (getMachineBal() <= balCheck)
+            DateTime date = DateTime.Now;
+            string logComment = "Machine Running Low on funds";
+         
+            if (getMachineBal() <= 10000)
             {
                 MessageBox.Show("MACHINE FUNDS RUNNING LOW! MAINTENANCE NEEDED!");
-                Environment.Exit(0);
+                createLog(date, 1 , machineID, gameID, 3, logComment, 0, getMachineBal());
+                pushLogToDB();
+                this.Close();
             }
         }
 
