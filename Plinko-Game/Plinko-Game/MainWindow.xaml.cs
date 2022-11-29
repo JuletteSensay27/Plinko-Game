@@ -42,6 +42,7 @@ namespace Plinko_Game
         private Dictionary<string , List<Object>> logsCont = new Dictionary<string, List<Object>>();
         private int logCounter = 0;
         private int totalWager = 0;
+        private decimal newMachineBal = 0;
 
         public MainWindow()
         {
@@ -1032,9 +1033,9 @@ namespace Plinko_Game
                     {
                       
                         userBalanceLbl.Content = $"User Balance: {playerBalance - playerWager}";
+                        userWagerTbx.Text = "0";
                         totalWager += playerWager;
-                        logComment = $"Customer Wagered {playerWager}";
-                        amazonDB.uspUpdateCustomerCurrentBalance(customerID, decimal.Parse(userWagerTbx.Text.ToString()));
+                        logComment = $"Customer Wagered {playerWager}";                    
                         createLog(timeLogin, customerID, machineID, gameID, 1, logComment, currentPlayerWinnings, getMachineBal());
                         this.playerWager = playerWager;
                         userBalance = decimal.Parse(userBalanceLbl.Content.ToString().Split(':')[1]);
@@ -1048,7 +1049,12 @@ namespace Plinko_Game
 
         private void login()
         {
-         
+
+            lblloginstatus.Content = "Login Status : ";
+            uPassStatusLbl.Content = "Password Status : ";
+            uNameStatusLbl.Content = "Username Status: ";
+            totalWager = 0;
+
             var allCustomers = (from b in amazonDB.table_Customers
                                 where b.Customer_Username == txtloginUsername.Text
                                 select b).ToList();
@@ -1091,10 +1097,7 @@ namespace Plinko_Game
 
                     DateTime timeLogin = DateTime.Now;
 
-                    userNameHolLbl.Content = txtloginUsername.Text;
-                    lblloginstatus.Content = "Login Status : ";
-                    uPassStatusLbl.Content = "Password Status : ";
-                    uNameStatusLbl.Content = "Username Status: ";
+                    userNameHolLbl.Content = txtloginUsername.Text;                  
                     uPassStatusLbl.Content += "Password match";
                     lblloginstatus.Content += "Login Success";
                     userNameLbl.Content += customerLogin.Customer_FirstName;
@@ -1134,6 +1137,10 @@ namespace Plinko_Game
         {
             var current = amazonDB.vwFunqAllMachines().ToList();
 
+            var customerIn = (from a in amazonDB.table_Customers
+                              where a.Customer_Username == userNameHolLbl.Content.ToString()
+                              select a).FirstOrDefault();
+
             int[] idsLoggedIn = new int[5];
             int x = 0;
 
@@ -1151,9 +1158,19 @@ namespace Plinko_Game
             }
             else
             {
-                DateTime timeLogin = DateTime.Now;
-                createLog(timeLogin, customerID, machineID, gameID, 1, $"Customer {customerID} has logged in", 0, getMachineBal());
-                amazonDB.uspUpdateMachineCustomer(machineID, customerID);
+                if (customerIn.Customer_CurrentBalance <= 0)
+                {
+                    MessageBox.Show("This has account 0 balance left");
+                    DateTime timeLogin = DateTime.Now;
+                    createLog(timeLogin, customerID, machineID, gameID, 2, $"Customer {customerID} balance is insufficient", 0, getMachineBal());
+                    this.Close();
+                }
+                else
+                {
+                    DateTime timeLogin = DateTime.Now;
+                    createLog(timeLogin, customerID, machineID, gameID, 1, $"Customer {customerID} has logged in", 0, getMachineBal());
+                    amazonDB.uspUpdateMachineCustomer(machineID, customerID);
+                }
             }
         }
 
@@ -1185,6 +1202,7 @@ namespace Plinko_Game
 
             int customerID = customerIn.Customer_ID;
 
+            newMachineBal = getMachineBal() + totalWager;
 
             userBalanceLbl.Content = "User Balance : ";
             userNameLbl.Content = "Username : ";
@@ -1197,13 +1215,17 @@ namespace Plinko_Game
             uPassStatusLbl.Content = "Password Status : ";
             uNameStatusLbl.Content = "Username Status: ";
             userWinningsLbl.Content = "User Winnings : ";
-            userNameHolLbl.Content = string.Empty;
+            userNameHolLbl.Content = " ";
             amazonDB.uspUpdateMachineCurrentWinnings(machineID, currentPlayerWinnings);
-            amazonDB.uspUpdateMachineBalance(machineID, (decimal)totalWager);
-            amazonDB.uspUpdateMachineCustomer(machineID, 1);
+            amazonDB.uspUpdateMachineBalance(machineID, newMachineBal);
+            amazonDB.uspUpdateCustomerCurrentBalance(customerID, totalWager);
             createLog(timeLogin, 1, machineID, gameID, 1, $"Machine Balance has increased by {totalWager}", currentPlayerWinnings, getMachineBal());
             createLog(timeLogin, customerID, machineID, gameID, 1, $"Customer {customerID} has logged out", currentPlayerWinnings, getMachineBal());
             pushLogToDB();
+            amazonDB.uspUpdateMachineCustomer(machineID, 1);
+            MainWindow mw = new MainWindow();
+            this.Close();
+            mw.Show();
 
         }
 
@@ -1290,9 +1312,10 @@ namespace Plinko_Game
 
         private void mainWindow_Closed(object sender, EventArgs e)
         {
-            if (userNameHolLbl.Content.ToString() != String.Empty) 
+            if (userNameHolLbl.Content.ToString() != " ") 
             {
-                amazonDB.uspUpdateMachineCurrentWinnings(machineID, currentPlayerWinnings);
+                amazonDB.uspUpdateMachineCustomer(machineID, 1);
+                pushLogToDB();
             }
         }
 

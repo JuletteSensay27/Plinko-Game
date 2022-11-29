@@ -38,35 +38,35 @@
         <elementListCompartment Id="aeda97b2-ee88-48ae-bb80-5afdb08373bf" absoluteBounds="0.765, 2.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.5 : 2.38544840494792); (6.25 : 2.38544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 2.38544840494792); (6.25 : 2.38544840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AmazonDBDataContext/table_Customer/table_Customer_table_Machine" />
       <nodes>
         <classShapeMoniker Id="0c384a92-cfce-4b11-829a-bdc5ce05cc80" />
         <classShapeMoniker Id="0682b8b4-32bf-4d8f-bda3-7c60b621333b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 6.47199625651042); (10 : 6.47199625651042); (10 : 3.6651025390625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.25 : 6.47199625651042); (10 : 6.47199625651042); (10 : 3.6651025390625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AmazonDBDataContext/table_ErrorCode/table_ErrorCode_table_GameLog" />
       <nodes>
         <classShapeMoniker Id="5e58633d-c920-414f-83d1-643ce90539d8" />
         <classShapeMoniker Id="e17fca82-cf89-4ad1-85e6-63618026ce65" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 2.38544840494792); (9 : 2.38544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.25 : 2.38544840494792); (9 : 2.38544840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AmazonDBDataContext/table_Machine/table_Machine_table_GameLog" />
       <nodes>
         <classShapeMoniker Id="0682b8b4-32bf-4d8f-bda3-7c60b621333b" />
         <classShapeMoniker Id="e17fca82-cf89-4ad1-85e6-63618026ce65" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 5.75); (5.875 : 5.375); (5.875 : 2.85942460742187); (6.25 : 2.85942460742187)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 5.75); (5.875 : 5.375); (5.875 : 2.85942460742187); (6.25 : 2.85942460742187)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AmazonDBDataContext/table_Game/table_Game_table_Machine" />
       <nodes>
         <classShapeMoniker Id="e09b96c4-303f-4201-8363-37d13dd31345" />
         <classShapeMoniker Id="0682b8b4-32bf-4d8f-bda3-7c60b621333b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 2.44314697265625); (3.5 : 2.44314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 2.44314697265625); (3.5 : 2.44314697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AmazonDBDataContext/table_ID/table_ID_table_Customer" />
       <nodes>
         <classShapeMoniker Id="c90de3dc-9100-4b67-ba55-c4680c4dd123" />
