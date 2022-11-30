@@ -30,3 +30,5 @@ C:\Users\JAPEQ-Family\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-G
 C:\Users\JAPEQ-Family\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\Plinko-Game.csproj.CoreCompileInputs.cache
 C:\Users\JAPEQ-Family\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\Plinko-Game.exe
 C:\Users\JAPEQ-Family\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\Plinko-Game.pdb
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\bin\Debug\PERSONA 5 Remix 🎵 Last Surprise (Future Funk Remix)  ► RobKTA's ＂Ambush Vibes!!＂ ♪ GameChops.wav
+C:\Users\julet\Desktop\Workspace\c# Apps\Plinko-Game\Plinko-Game\Plinko-Game\obj\Debug\Plinko-Game_Content.g.cs

@@ -117,5 +117,10 @@
   <ItemGroup>
     <Resource Include="casino.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="PERSONA 5 Remix 🎵 Last Surprise %28Future Funk Remix%29  ► RobKTA%27s ＂Ambush Vibes!!＂ ♪ GameChops.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

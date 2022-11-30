@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing;
 using System.Windows.Media.Effects;
+using System.Media;
 
 namespace Plinko_Game
 {
@@ -43,6 +44,7 @@ namespace Plinko_Game
         private int logCounter = 0;
         private int totalWager = 0;
         private decimal newMachineBal = 0;
+        private SoundPlayer musicBg = new SoundPlayer();
 
         public MainWindow()
         {
@@ -58,7 +60,9 @@ namespace Plinko_Game
 
              }
             gameButton.Visibility = Visibility.Hidden;
-
+            musicBg.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\PERSONA 5 Remix 🎵 Last Surprise (Future Funk Remix)  ► RobKTA's ＂Ambush Vibes!!＂ ♪ GameChops.wav";
+            musicBg.PlayLooping();
+            
 
             infoHolRect.Height = gameBoardCont.Height + 150;
             txtloginUsername.FontFamily = new FontFamily("Lexend Deca");
@@ -67,7 +71,7 @@ namespace Plinko_Game
             infoHolRect.Width = 500;
             gameNavRect.Width = Width + Width;
             titleLbl.FontFamily = new FontFamily("ROYALE");
-            loginGrid.Margin = new Thickness(gameNavRect.Width - 1400, (gameNavRect.Height / 2) - 15, 0, 0);
+            loginGrid.Margin = new Thickness(gameNavRect.Width - 1500, (gameNavRect.Height / 2) - 40, 0, 0);
             closeBtn.Margin = new Thickness(Width+427, 0, 0, 0); ;
             closeBtn.Height = gameNavRect.Height;
             closeBtn.FontFamily = new FontFamily("ROYALE");
@@ -101,7 +105,7 @@ namespace Plinko_Game
             gameBoardCont.HorizontalAlignment = HorizontalAlignment.Left;
             gameBoardCont.Width = 1010;
             gameBoardCont.Height = 715;
-            gameBoardCont.Margin = new Thickness(480,((int)mainWindow.Height/2)-100,0,0);
+            gameBoardCont.Margin = new Thickness(480,((int)mainWindow.Height/2)-125,0,0);
             mainGrid.Children.Add(gameBoardCont);
 
             for (int i = 0; i < gameBoard.Length; i++)
@@ -109,21 +113,6 @@ namespace Plinko_Game
 
             h = (int)gameBoardCont.Width / 2;
             v = 0;
-
-            
-            gameButton = new Button();
-
-            gameButton.VerticalAlignment = VerticalAlignment.Top;
-            gameButton.HorizontalAlignment = HorizontalAlignment.Left;
-            gameButton.Margin = new Thickness(h-55, v-30, 0, 0);
-            gameButton.Width = 175;
-            gameButton.Height = 50;
-            gameButton.Content = "Drop Ball";
-            gameButton.FontFamily = new FontFamily("Lexend Deca");
-            gameButton.FontSize = 30;
-            gameButton.Background = new SolidColorBrush(Color.FromRgb(136, 0, 199));
-            gameButton.Click += gameButton_Click;
-            gameBoardCont.Children.Add(gameButton);
 
             h = 0;
             v = 70;

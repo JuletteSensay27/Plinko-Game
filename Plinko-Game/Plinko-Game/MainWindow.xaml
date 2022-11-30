@@ -21,16 +21,20 @@
                 <DropShadowEffect Color="Black" Direction="300" ShadowDepth="4" />
             </Rectangle.Effect>
         </Rectangle>
-        <Grid x:Name="loginGrid" HorizontalAlignment="Left" Margin="356,20,0,0" VerticalAlignment="Top" Width="702">
-            <Button x:Name="loginBtn" Content="Log In" HorizontalAlignment="Left" Margin="600,0,0,0" VerticalAlignment="Center" Height="32" Width="92" Click="loginBtn_Click"/>
-            <TextBox x:Name="txtloginUsername" BorderThickness="3"  VerticalAlignment="Center"   TextAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap"  Width="159" BorderBrush="#FFBC5AFF" Background="Black" Height="32" SelectionBrush="{x:Null}" Margin="92,0,0,0"/>
-            <PasswordBox x:Name="txtloginPassword"  BorderThickness="3"  VerticalAlignment="Center"  HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center"   Width="162" Height="32" Background="Black" SelectionBrush="{x:Null}" BorderBrush="#FFBC5AFF" Margin="391,0,0,0"/>
-            <Label x:Name="uNLbl" Content="Username" HorizontalAlignment="Left" VerticalAlignment="Center"  VerticalContentAlignment="Center" FontSize="20" Margin="-28,0,0,0" Foreground="#FFC7EB07">
+        <Grid x:Name="loginGrid" HorizontalAlignment="Left"  Margin="161,20,0,0" VerticalAlignment="Top" Width="979" Height="78">
+            <Button x:Name="loginBtn" Content="Log In"  FontFamily="ROYALE"  FontSize="30" HorizontalAlignment="Left" Margin="623,0,0,0" VerticalAlignment="Center" Height="50" Width="146" Click="loginBtn_Click" FontWeight="Bold" Background="#FF62178F" Foreground="#FFFFF221">
+                <Button.Effect>
+                    <DropShadowEffect Color="#FFFCFF00" ShadowDepth="1" BlurRadius="20" Direction="300"/>
+                </Button.Effect>
+            </Button>
+            <TextBox x:Name="txtloginUsername" BorderThickness="3"  VerticalAlignment="Center"   TextAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap"  Width="159" BorderBrush="#FFBC5AFF" Background="Black" Height="32" SelectionBrush="{x:Null}" Margin="121,0,0,0"/>
+            <PasswordBox x:Name="txtloginPassword"  BorderThickness="3"  VerticalAlignment="Center"  HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center"   Width="162" Height="32" Background="Black" SelectionBrush="{x:Null}" BorderBrush="#FFBC5AFF" Margin="416,0,0,0"/>
+            <Label x:Name="uNLbl" Content="Username" HorizontalAlignment="Left" VerticalAlignment="Center"  VerticalContentAlignment="Center" FontSize="20" Foreground="#FFC7EB07" Margin="-1,0,0,0">
                 <Label.Effect>
                     <DropShadowEffect BlurRadius="5" Color="#FFC7EB07" ShadowDepth="1"/>
                 </Label.Effect>
             </Label>
-            <Label x:Name="uPassLbl" Content="Password" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Margin="272,0,0,0" Foreground="#FFC7EB07">
+            <Label x:Name="uPassLbl" Content="Password" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Margin="301,0,0,0" Foreground="#FFC7EB07">
                 <Label.Effect>
                     <DropShadowEffect BlurRadius="3" Color="#FFC7EB07" ShadowDepth="1"/>
                 </Label.Effect>
@@ -72,6 +76,7 @@
             </Label.Effect>
         </Label>
         <Button x:Name="closeBtn" Content="x" HorizontalAlignment="Left" Margin="1049,0,0,0" VerticalAlignment="Top" Background="#FFDF4B4B" FontFamily="Arial" Foreground="White" Click="closeBtn_Click" BorderBrush="{x:Null}" FontWeight="Bold" Height="67" Width="31"/>
+        <Image x:Name="gambleGIF" Height="100" Width="100" Source="/casino.gif"/>
 
     </Grid>
 </Window>
