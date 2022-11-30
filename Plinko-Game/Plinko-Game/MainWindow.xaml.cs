@@ -54,6 +54,7 @@ namespace Plinko_Game
                  addValueBtn.IsEnabled = false;
                  subValueBtn.IsEnabled = false;
                  gameButton.IsEnabled = false;
+                userWagerTbx.IsEnabled = false;
 
              }
            
@@ -1096,25 +1097,13 @@ namespace Plinko_Game
                      */
 
                     DateTime timeLogin = DateTime.Now;
-
-                    userNameHolLbl.Content = txtloginUsername.Text;                  
-                    uPassStatusLbl.Content += "Password match";
-                    lblloginstatus.Content += "Login Success";
-                    userNameLbl.Content += customerLogin.Customer_FirstName;
-                    userBalanceLbl.Content += customerLogin.Customer_CurrentBalance.ToString();
-                    confirmWagerBtn.IsEnabled = true;
-                    addValueBtn.IsEnabled = true;
-                    subValueBtn.IsEnabled = true;
-                    loginBtn.Content = "Log Out";
-                    txtloginPassword.Password = string.Empty;
-                    txtloginUsername.Text = string.Empty;
-
+                    userNameHolLbl.Content = txtloginUsername.Text;
                     var customerIn = (from a in amazonDB.table_Customers
                                       where a.Customer_Username == userNameHolLbl.Content.ToString()
                                       select a).FirstOrDefault();
 
                     int customerID = customerIn.Customer_ID;
-
+                  
                     checkCustomerIfLoggedIn(customerID);
                   
                 }
@@ -1127,7 +1116,7 @@ namespace Plinko_Game
             else
             {
                 DateTime timeLogin = DateTime.Now;
-               amazonDB.uspCreateGameLog(timeLogin, 1, machineID, gameID, 4, "Customer is not found", 0, 0);
+               amazonDB.uspCreateGameLog(timeLogin, 1, machineID, gameID, 4, $"Attempt log in with non existent username {txtloginUsername.Text}", 0, 0);
                 uNameStatusLbl.Content += "Username Not Found";
                 lblloginstatus.Content += "Login Failed";
             }
@@ -1141,35 +1130,49 @@ namespace Plinko_Game
                               where a.Customer_Username == userNameHolLbl.Content.ToString()
                               select a).FirstOrDefault();
 
-            int[] idsLoggedIn = new int[5];
-            int x = 0;
+           List<int> idsLoggedIn = new List<int>();
+           
 
             foreach (var id in current)
             {
-                idsLoggedIn[x++] = id.Customer_ID;
+                idsLoggedIn.Add(id.Customer_ID);
             }
 
             if (idsLoggedIn.Contains(customerID))
             {
                 MessageBox.Show("User is logged in already in different machine");
                 DateTime timeLogin = DateTime.Now;
-                amazonDB.uspCreateGameLog(timeLogin, customerID, machineID, gameID, 5, "Customer is logged in already", 0, getMachineBal());
+                amazonDB.uspCreateGameLog(timeLogin, customerID, machineID, gameID, 5, $"Attempted login while customer is already active on customer {customerID}", 0, getMachineBal());
                 this.Close();
             }
             else
             {
                 if (customerIn.Customer_CurrentBalance <= 0)
                 {
-                    MessageBox.Show("This has account 0 balance left");
+                    MessageBox.Show("This account has 0 balance left");
                     DateTime timeLogin = DateTime.Now;
-                    createLog(timeLogin, customerID, machineID, gameID, 2, $"Customer {customerID} balance is insufficient", 0, getMachineBal());
+                    createLog(timeLogin, customerID, machineID, gameID, 2, $"Customer {customerID} balance zero balance", 0, getMachineBal());
                     this.Close();
                 }
                 else
                 {
+                    var customerLogin = (from a in amazonDB.table_Customers
+                                         where a.Customer_Username == txtloginUsername.Text
+                                         select a).FirstOrDefault();
                     DateTime timeLogin = DateTime.Now;
                     createLog(timeLogin, customerID, machineID, gameID, 1, $"Customer {customerID} has logged in", 0, getMachineBal());
                     amazonDB.uspUpdateMachineCustomer(machineID, customerID);
+                    uPassStatusLbl.Content += "Password match";
+                    lblloginstatus.Content += "Login Success";
+                    userNameLbl.Content += customerLogin.Customer_FirstName;
+                    userBalanceLbl.Content += customerLogin.Customer_CurrentBalance.ToString();
+                    confirmWagerBtn.IsEnabled = true;
+                    addValueBtn.IsEnabled = true;
+                    subValueBtn.IsEnabled = true;
+                    userWagerTbx.IsEnabled = true;
+                    loginBtn.Content = "Log Out";
+                    txtloginPassword.Password = string.Empty;
+                    txtloginUsername.Text = string.Empty;
                 }
             }
         }
@@ -1314,7 +1317,19 @@ namespace Plinko_Game
         {
             if (userNameHolLbl.Content.ToString() != " ") 
             {
+                DateTime timeLogin = DateTime.Now;
+                var customerIn = (from a in amazonDB.table_Customers
+                                  where a.Customer_Username == userNameHolLbl.Content.ToString()
+                                  select a).FirstOrDefault();
+
+                int customerID = customerIn.Customer_ID;
+                newMachineBal = getMachineBal() + totalWager;
+                amazonDB.uspUpdateMachineCurrentWinnings(machineID, currentPlayerWinnings);
+                amazonDB.uspUpdateMachineBalance(machineID, newMachineBal);
+                amazonDB.uspUpdateCustomerCurrentBalance(customerID, totalWager);
                 amazonDB.uspUpdateMachineCustomer(machineID, 1);
+                createLog(timeLogin, 1, machineID, gameID, 1, $"Machine Balance has increased by {totalWager}", currentPlayerWinnings, getMachineBal());
+                createLog(timeLogin, customerID, machineID, gameID, 1, $"Customer {customerID} has quit the application unexpectedly", currentPlayerWinnings, getMachineBal());
                 pushLogToDB();
             }
         }
