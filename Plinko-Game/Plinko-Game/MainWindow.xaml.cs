@@ -1318,7 +1318,6 @@ namespace Plinko_Game
         private void mainWindow_Closed(object sender, EventArgs e)
         {
 
-
             if (userNameHolLbl.Content.ToString() != string.Empty) 
             {
                 DateTime timeLogin = DateTime.Now;
