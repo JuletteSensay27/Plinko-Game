@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing;
-
+using System.Windows.Media.Effects;
 
 namespace Plinko_Game
 {
@@ -57,7 +57,24 @@ namespace Plinko_Game
                 userWagerTbx.IsEnabled = false;
 
              }
-           
+            gameButton.Visibility = Visibility.Hidden;
+
+
+            infoHolRect.Height = gameBoardCont.Height + 150;
+            txtloginUsername.FontFamily = new FontFamily("Lexend Deca");
+            txtloginUsername.Foreground = new SolidColorBrush(Colors.White);
+            txtloginPassword.Foreground = new SolidColorBrush(Colors.White);
+            infoHolRect.Width = 500;
+            gameNavRect.Width = Width + Width;
+            titleLbl.FontFamily = new FontFamily("ROYALE");
+            loginGrid.Margin = new Thickness(gameNavRect.Width - 1400, (gameNavRect.Height / 2) - 15, 0, 0);
+            closeBtn.Margin = new Thickness(Width+427, 0, 0, 0); ;
+            closeBtn.Height = gameNavRect.Height;
+            closeBtn.FontFamily = new FontFamily("ROYALE");
+            closeBtn.FontSize = 30;
+            uNLbl.FontFamily = new FontFamily("ROYALE");
+            uPassLbl.FontFamily = new FontFamily("ROYALE");
+            playInfoGrid.Margin = new Thickness(35,(infoHolRect.Height/2)-150,0,0);
         }
 
         private decimal getMachineBal() 
@@ -74,16 +91,17 @@ namespace Plinko_Game
 
         private void initGameBoard() 
         {
+
+
             int v = 5;
             int h = 0;
 
             gameBoardCont = new Grid();
             gameBoardCont.VerticalAlignment = VerticalAlignment.Top;
             gameBoardCont.HorizontalAlignment = HorizontalAlignment.Left;
-            gameBoardCont.Width = 800;
-            gameBoardCont.Height = 590;
-            gameBoardCont.Margin = new Thickness(300,((int)mainWindow.Height/2)-190,0,0);
-
+            gameBoardCont.Width = 1010;
+            gameBoardCont.Height = 715;
+            gameBoardCont.Margin = new Thickness(480,((int)mainWindow.Height/2)-100,0,0);
             mainGrid.Children.Add(gameBoardCont);
 
             for (int i = 0; i < gameBoard.Length; i++)
@@ -92,18 +110,23 @@ namespace Plinko_Game
             h = (int)gameBoardCont.Width / 2;
             v = 0;
 
+            
             gameButton = new Button();
+
             gameButton.VerticalAlignment = VerticalAlignment.Top;
             gameButton.HorizontalAlignment = HorizontalAlignment.Left;
-            gameButton.Margin = new Thickness(h-15, v, 0, 0);
-            gameButton.Width = 70;
-            gameButton.Height = 20;
+            gameButton.Margin = new Thickness(h-55, v-30, 0, 0);
+            gameButton.Width = 175;
+            gameButton.Height = 50;
             gameButton.Content = "Drop Ball";
+            gameButton.FontFamily = new FontFamily("Lexend Deca");
+            gameButton.FontSize = 30;
+            gameButton.Background = new SolidColorBrush(Color.FromRgb(136, 0, 199));
             gameButton.Click += gameButton_Click;
             gameBoardCont.Children.Add(gameButton);
 
             h = 0;
-            v = 30;
+            v = 70;
 
             for (int x = 0; x < gameBoard.Length; x++) 
             {
@@ -113,50 +136,97 @@ namespace Plinko_Game
                         h = (int)gameBoardCont.Width / 2;
                         break;
                     case 1:
-                        h = ((int)gameBoardCont.Width / 2) - 25;
+                        h = ((int)gameBoardCont.Width / 2) - 45;
                         break;
                     case 2:
-                        h = ((int)gameBoardCont.Width / 2) - 50;
+                        h = ((int)gameBoardCont.Width / 2) - 90;
                         break;
                     case 3:
-                        h = ((int)gameBoardCont.Width / 2) - 75;
+                        h = ((int)gameBoardCont.Width / 2) - 135;
                         break;
                     case 4:
-                        h = ((int)gameBoardCont.Width / 2) - 100;
+                        h = ((int)gameBoardCont.Width / 2) - 180;
                         break;
                     case 5:
-                        h = ((int)gameBoardCont.Width / 2) - 125;
+                        h = ((int)gameBoardCont.Width / 2) - 225;
                         break;
                     case 6:
-                        h = ((int)gameBoardCont.Width / 2) - 150;
+                        h = ((int)gameBoardCont.Width / 2) - 270;
                         break;
                     case 7:
-                        h = ((int)gameBoardCont.Width / 2) - 175;
+                        h = ((int)gameBoardCont.Width / 2) - 315;
                         break;
                     case 8:
-                        h = ((int)gameBoardCont.Width / 2) - 200;
+                        h = ((int)gameBoardCont.Width / 2) - 360;
                         break;
                 }
 
                 for (int y = 0; y < gameBoard[x].Length; y++) 
                 {               
                     Label grid = new Label();
+                    DropShadowEffect ds = new DropShadowEffect();
+                    ds.Color = Colors.Yellow;
+                    ds.BlurRadius = 20;
+                    ds.Direction = 250;
+                    ds.ShadowDepth = 0;
                     grid.VerticalAlignment = VerticalAlignment.Top;
                     grid.HorizontalAlignment = HorizontalAlignment.Left;
-                    grid.Width = 40;
-                    grid.Height = 40;
+                    grid.Width = 60;
+                    grid.Height = 60;
+                    grid.Background = new SolidColorBrush(Colors.DarkGoldenrod);
+
                     grid.Margin = new Thickness(h, v, 0, 0);
-                    grid.BorderBrush = new SolidColorBrush(Colors.Black);
+                    grid.BorderBrush = new SolidColorBrush(Colors.Yellow);
                     grid.BorderThickness = new Thickness(2, 2, 2, 2);
+                    grid.Effect = ds;
+                    grid.FontFamily = new FontFamily("ROYALE");
+                   
+                    grid.FontSize = 20;
+                    
+                    if (x == 8) 
+                    {
+                        grid.Foreground = new SolidColorBrush(Colors.White);
+                        switch (y) 
+                        {
+                            case 0:
+                                grid.Content = "x10";
+                                break;
+                            case 1:
+                                grid.Content = "x3";
+                                break;
+                            case 2:
+                                grid.Content = "x1/2";
+                                break;
+                            case 3:
+                                grid.Content = "x0";
+                                break;
+                            case 4:
+                                grid.Content = "x1";
+                                break;
+                            case 5:
+                                grid.Content = "x0";
+                                break;
+                            case 6:
+                                grid.Content = "x1/2";
+                                break;
+                            case 7:
+                                grid.Content = "x3";
+                                break;
+                            case 8:
+                                grid.Content = "x10";
+                                break;
+                        }
+                    }
+
                     grid.VerticalContentAlignment = VerticalAlignment.Center;
                     grid.HorizontalContentAlignment = HorizontalAlignment.Center;
                     gameBoard[x][y] = grid;
                     gameBoardCont.Children.Add(gameBoard[x][y]);
 
-                    h += 10 + (int)grid.Width;
+                    h += 30 + (int)grid.Width;
                 }
 
-                v += 60;
+                v += 70;
                 h = 0;
             }
 
@@ -164,20 +234,60 @@ namespace Plinko_Game
 
         private async void gameButton_Click(object sender, EventArgs e) 
         {
-            Label[] prizeRow = new Label[9];
-            gameButton.IsEnabled= false;
+            
+        }
 
-            for(int x = 0; x < gameBoard.Length; x++)
-                for(int y = 0;y  < gameBoard[x].Length; y++)
+        private async void dropBall() 
+        {
+            Label[] prizeRow = new Label[9];
+
+            gameButton.IsEnabled = false;
+
+            for (int x = 0; x < gameBoard.Length; x++)
+                for (int y = 0; y < gameBoard[x].Length; y++)
                     gameBoard[x][y].Content = string.Empty;
+
+            for (int y = 0; y < gameBoard[8].Length; y++)
+            {
+                switch (y)
+                {
+                    case 0:
+                        gameBoard[8][y].Content = "x10";
+                        break;
+                    case 1:
+                        gameBoard[8][y].Content = "x3";
+                        break;
+                    case 2:
+                        gameBoard[8][y].Content = "x1/2";
+                        break;
+                    case 3:
+                        gameBoard[8][y].Content = "x0";
+                        break;
+                    case 4:
+                        gameBoard[8][y].Content = "x1";
+                        break;
+                    case 5:
+                        gameBoard[8][y].Content = "x0";
+                        break;
+                    case 6:
+                        gameBoard[8][y].Content = "x1/2";
+                        break;
+                    case 7:
+                        gameBoard[8][y].Content = "x3";
+                        break;
+                    case 8:
+                        gameBoard[8][y].Content = "x10";
+                        break;
+                }
+            }
 
             Random rnd = new Random();
 
             gameBall = new Ellipse();
-            gameBall.Width = 25;
-            gameBall.Height = 25;
-            gameBall.Fill = new SolidColorBrush(Colors.MediumPurple);
-            gameBall.Stroke = new SolidColorBrush(Colors.DarkViolet);
+            gameBall.Width = 30;
+            gameBall.Height = 30;
+            gameBall.Fill = new SolidColorBrush(Colors.Gold);
+            gameBall.Stroke = new SolidColorBrush(Colors.LightGoldenrodYellow);
             gameBall.StrokeThickness = 3;
 
             int newPos = 0;
@@ -185,9 +295,9 @@ namespace Plinko_Game
             int prevPos = 0;
             ballPosition[0] = 0;
 
-            while (counter <= gameBoard.Length) 
+            while (counter <= gameBoard.Length)
             {
-                await Task.Delay(75) ;
+                await Task.Delay(75);
 
                 if (counter < 1)
                 {
@@ -243,7 +353,7 @@ namespace Plinko_Game
                     ballPosition[2] = newPos;
 
                 }
-                else if (counter == 2) 
+                else if (counter == 2)
                 {
 
                     gameBoard[counter - 1][prevPos].Content = string.Empty;
@@ -849,13 +959,13 @@ namespace Plinko_Game
                 counter++;
             }
 
-            for (int i = 0; i < gameBoard[8].Length; i++) 
+            for (int i = 0; i < gameBoard[8].Length; i++)
             {
                 prizeRow[i] = gameBoard[8][i];
             }
             showPrize(prizeRow, playerWager, userBalance);
-            gameButton.IsEnabled= false;
-            confirmWagerBtn.IsEnabled= true;
+            gameButton.IsEnabled = false;
+            confirmWagerBtn.IsEnabled = true;
         }
 
         private string formatErrMessage(string[] errMess) 
@@ -1042,6 +1152,7 @@ namespace Plinko_Game
                         userBalance = decimal.Parse(userBalanceLbl.Content.ToString().Split(':')[1]);
                         confirmWagerBtn.IsEnabled = false;
                         gameButton.IsEnabled = true;
+                        dropBall();
 
                     }
                 }
@@ -1140,7 +1251,7 @@ namespace Plinko_Game
 
             if (idsLoggedIn.Contains(customerID))
             {
-                userNameHolLbl.Content = " ";
+                userNameHolLbl.Content = string.Empty;
                 MessageBox.Show("User is logged in already in different machine");
                 DateTime timeLogin = DateTime.Now;
                 amazonDB.uspCreateGameLog(timeLogin, customerID, machineID, gameID, 5, $"Attempted login while customer is already active on customer {customerID}", 0, getMachineBal());
@@ -1153,8 +1264,7 @@ namespace Plinko_Game
                    
                     MessageBox.Show("This account has 0 balance left");
                     DateTime timeLogin = DateTime.Now;
-                    createLog(timeLogin, customerID, machineID, gameID, 2, $"Customer {customerID} balance zero balance", 0, getMachineBal());
-                    this.Close();
+                    createLog(timeLogin, customerID, machineID, gameID, 2, $"Customer {customerID} balance zero balance", 0, getMachineBal());             
                 }
                 else
                 {
@@ -1175,6 +1285,9 @@ namespace Plinko_Game
                     loginBtn.Content = "Log Out";
                     txtloginPassword.Password = string.Empty;
                     txtloginUsername.Text = string.Empty;
+                    txtloginPassword.IsEnabled = false;
+                    txtloginUsername.IsEnabled = false;
+
                 }
             }
         }
@@ -1220,7 +1333,7 @@ namespace Plinko_Game
             uPassStatusLbl.Content = "Password Status : ";
             uNameStatusLbl.Content = "Username Status: ";
             userWinningsLbl.Content = "User Winnings : ";
-            userNameHolLbl.Content = " ";
+            userNameHolLbl.Content = string.Empty;
             amazonDB.uspUpdateMachineCurrentWinnings(machineID, currentPlayerWinnings);
             amazonDB.uspUpdateMachineBalance(machineID, newMachineBal);
             amazonDB.uspUpdateCustomerCurrentBalance(customerID, totalWager);
@@ -1259,13 +1372,13 @@ namespace Plinko_Game
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 1:
-                            playerPrize = playerWager * 5;                       
+                            playerPrize = playerWager * 3;                       
                             currentPlayerWinnings += playerPrize;
                             logComment = $"Customer {customerIn.Customer_FirstName} won ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 2:
-                            playerPrize = playerWager * 2;                          
+                            playerPrize = playerWager * 1/2;                          
                             currentPlayerWinnings += playerPrize;
                             logComment = $"Customer {customerIn.Customer_FirstName} won ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
@@ -1289,13 +1402,13 @@ namespace Plinko_Game
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 6:
-                            playerPrize = playerWager * 2;                           
+                            playerPrize = playerWager * 1/2;                           
                             currentPlayerWinnings += playerPrize;
                             logComment = $"Customer {customerIn.Customer_FirstName} won ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 7:
-                            playerPrize = playerWager * 5;                           
+                            playerPrize = playerWager * 3;                           
                             currentPlayerWinnings += playerPrize;
                             logComment = $"Customer {customerIn.Customer_FirstName} won ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
@@ -1398,6 +1511,16 @@ namespace Plinko_Game
                             decimal.Parse(logsCont.Values.ElementAt(i).ElementAt(x+6).ToString()),
                             decimal.Parse(logsCont.Values.ElementAt(i).ElementAt(x+7).ToString())
                         );
+            }
+        }
+
+        private void closeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var confirm = MessageBox.Show(messageBoxText: "Do you want to proceed with this operation?", caption: "Closing Application", MessageBoxButton.YesNo);
+
+            if (confirm == MessageBoxResult.Yes) 
+            {
+                this.Close();
             }
         }
     }

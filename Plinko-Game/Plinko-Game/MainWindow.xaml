@@ -5,23 +5,73 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Plinko_Game"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="1080" SizeToContent="Height" Closed="mainWindow_Closed" Initialized="mainWindow_Initialized" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="450" Width="1080" SizeToContent="Height" Closed="mainWindow_Closed" Initialized="mainWindow_Initialized" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="NoResize" WindowStyle="None">
     <Grid x:Name="mainGrid">
-        <Button x:Name="loginBtn" Content="Log In" HorizontalAlignment="Left" Margin="19,95,0,0" VerticalAlignment="Top" Height="27" Width="92" Click="loginBtn_Click"/>
-        <Label x:Name="userNameLbl" Content="Username : " HorizontalAlignment="Left" Margin="19,211,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="userBalanceLbl" Content="User Balance : " HorizontalAlignment="Left" Margin="19,242,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="userWagerHeaderLbl" Content="Place Bet Here: " HorizontalAlignment="Left" Margin="21,314,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="subValueBtn" Content="-" HorizontalAlignment="Left" Margin="28,356,0,0" VerticalAlignment="Top" Width="12" Click="subValueBtn_Click"/>
-        <TextBox x:Name="userWagerTbx" HorizontalAlignment="Left" Margin="45,357,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="89"/>
-        <Button x:Name="addValueBtn" Content="+" HorizontalAlignment="Left" Margin="139,356,0,0" VerticalAlignment="Top" Width="12" Click="addValueBtn_Click"/>
-        <Button x:Name="confirmWagerBtn" Content="Place Wager" HorizontalAlignment="Left" Margin="28,393,0,0" VerticalAlignment="Top" Click="confirmWagerBtn_Click"/>
-        <TextBox x:Name="txtloginUsername" HorizontalAlignment="Left" Margin="19,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <PasswordBox x:Name="txtloginPassword" HorizontalAlignment="Left" Margin="19,62,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="lblloginstatus" Content="Log In Status : " HorizontalAlignment="Left" Margin="19,141,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="uNameStatusLbl" Content="Username Status : " HorizontalAlignment="Left" Margin="166,26,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="uPassStatusLbl" Content="Password Status : " HorizontalAlignment="Left" Margin="166,58,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="userWinningsLbl" Content="User Winnings : " HorizontalAlignment="Left" Margin="21,283,0,0" VerticalAlignment="Top"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Free-download-Neon-Purple-Aesthetic-Wallpaper-HD.jpg" Opacity="1"/>
+        </Grid.Background>
+        <Rectangle x:Name="infoHolRect" HorizontalAlignment="Left" Margin="0,40,0,0" VerticalAlignment="Top" Width="179" >
+            <Rectangle.Fill>
+                <SolidColorBrush Color="Black" Opacity="0.3"/>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Rectangle x:Name="gameNavRect" HorizontalAlignment="Center" Height="67" VerticalAlignment="Top" Fill="#FF7E38B7" Width="800">
+            <Rectangle.Effect>
+                <DropShadowEffect Color="Black" Direction="300" ShadowDepth="4" />
+            </Rectangle.Effect>
+        </Rectangle>
+        <Grid x:Name="loginGrid" HorizontalAlignment="Left" Margin="356,20,0,0" VerticalAlignment="Top" Width="702">
+            <Button x:Name="loginBtn" Content="Log In" HorizontalAlignment="Left" Margin="600,0,0,0" VerticalAlignment="Center" Height="32" Width="92" Click="loginBtn_Click"/>
+            <TextBox x:Name="txtloginUsername" BorderThickness="3"  VerticalAlignment="Center"   TextAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap"  Width="159" BorderBrush="#FFBC5AFF" Background="Black" Height="32" SelectionBrush="{x:Null}" Margin="92,0,0,0"/>
+            <PasswordBox x:Name="txtloginPassword"  BorderThickness="3"  VerticalAlignment="Center"  HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center"   Width="162" Height="32" Background="Black" SelectionBrush="{x:Null}" BorderBrush="#FFBC5AFF" Margin="391,0,0,0"/>
+            <Label x:Name="uNLbl" Content="Username" HorizontalAlignment="Left" VerticalAlignment="Center"  VerticalContentAlignment="Center" FontSize="20" Margin="-28,0,0,0" Foreground="#FFC7EB07">
+                <Label.Effect>
+                    <DropShadowEffect BlurRadius="5" Color="#FFC7EB07" ShadowDepth="1"/>
+                </Label.Effect>
+            </Label>
+            <Label x:Name="uPassLbl" Content="Password" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Margin="272,0,0,0" Foreground="#FFC7EB07">
+                <Label.Effect>
+                    <DropShadowEffect BlurRadius="3" Color="#FFC7EB07" ShadowDepth="1"/>
+                </Label.Effect>
+            </Label>
+        </Grid>
+        <Button x:Name="subValueBtn" Content="-" Visibility="Hidden" HorizontalAlignment="Left" Margin="28,356,0,0" VerticalAlignment="Top" Width="12" Click="subValueBtn_Click"/>
+        <Button x:Name="addValueBtn" Visibility="Hidden" Content="+" HorizontalAlignment="Left" Margin="139,356,0,0" VerticalAlignment="Top" Width="12" Click="addValueBtn_Click"/>
+        <Label x:Name="lblloginstatus" Content="Log In Status : " HorizontalAlignment="Left" Visibility="Hidden" Margin="135,219,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="uNameStatusLbl" Content="Username Status : " HorizontalAlignment="Left" Visibility="Hidden" Margin="147,13,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="uPassStatusLbl" Content="Password Status : " HorizontalAlignment="Left" Visibility="Hidden" Margin="282,136,0,0" VerticalAlignment="Top"/>
+        <Grid x:Name="playInfoGrid" HorizontalAlignment="Left" Height="466" Margin="21,115,0,0" VerticalAlignment="Top" Width="539">
+            <Label x:Name="userNameLbl" Content="Username : " FontFamily="ROYALE" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White">
+                <Label.Effect>
+                    <DropShadowEffect/>
+                </Label.Effect>
+            </Label>
+            <Label x:Name="userBalanceLbl" Content="User Balance : " FontFamily="ROYALE" FontSize="30" HorizontalAlignment="Left" Margin="0,70,0,0" VerticalAlignment="Top" Foreground="White">
+                <Label.Effect>
+                    <DropShadowEffect/>
+                </Label.Effect>
+            </Label>
+            <Label x:Name="userWagerHeaderLbl" Content="Place Bet Here: " FontFamily="ROYALE" FontSize="30" HorizontalAlignment="Left" Margin="10,199,0,0" VerticalAlignment="Top" Foreground="White">
+                <Label.Effect>
+                    <DropShadowEffect/>
+                </Label.Effect>
+            </Label>
+            <TextBox x:Name="userWagerTbx" HorizontalAlignment="Left"  FontFamily="ROYALE" FontSize="30" Margin="7,267,0,0" TextWrapping="Wrap" Text="0" VerticalContentAlignment="Center" TextAlignment="Center" VerticalAlignment="Top" Width="248" Height="49"/>
+            <Button x:Name="confirmWagerBtn" Content="Place Wager" FontFamily="ROYALE" FontSize="30" HorizontalAlignment="Left" Margin="7,337,0,0" VerticalAlignment="Top" Click="confirmWagerBtn_Click" Width="248" Height="48"/>
+            <Label x:Name="userWinningsLbl" Content="User Winnings : " FontFamily="ROYALE" FontSize="30" HorizontalAlignment="Left" Margin="9,135,0,0" VerticalAlignment="Top" Foreground="White">
+                <Label.Effect>
+                    <DropShadowEffect/>
+                </Label.Effect>
+            </Label>
+        </Grid>
         <Label x:Name="userNameHolLbl" Content="" HorizontalAlignment="Left" Margin="307,26,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+        <Label x:Name="titleLbl" Content="Plinko Royale" HorizontalAlignment="Left" Margin="10,-6,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="55" Foreground="#FFE4E637" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect Color="#FFE4E637" ShadowDepth="1" BlurRadius="10"/>
+            </Label.Effect>
+        </Label>
+        <Button x:Name="closeBtn" Content="x" HorizontalAlignment="Left" Margin="1049,0,0,0" VerticalAlignment="Top" Background="#FFDF4B4B" FontFamily="Arial" Foreground="White" Click="closeBtn_Click" BorderBrush="{x:Null}" FontWeight="Bold" Height="67" Width="31"/>
 
     </Grid>
 </Window>
