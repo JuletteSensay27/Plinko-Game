@@ -1140,6 +1140,7 @@ namespace Plinko_Game
 
             if (idsLoggedIn.Contains(customerID))
             {
+                userNameHolLbl.Content = " ";
                 MessageBox.Show("User is logged in already in different machine");
                 DateTime timeLogin = DateTime.Now;
                 amazonDB.uspCreateGameLog(timeLogin, customerID, machineID, gameID, 5, $"Attempted login while customer is already active on customer {customerID}", 0, getMachineBal());
@@ -1149,6 +1150,7 @@ namespace Plinko_Game
             {
                 if (customerIn.Customer_CurrentBalance <= 0)
                 {
+                   
                     MessageBox.Show("This account has 0 balance left");
                     DateTime timeLogin = DateTime.Now;
                     createLog(timeLogin, customerID, machineID, gameID, 2, $"Customer {customerID} balance zero balance", 0, getMachineBal());
@@ -1315,7 +1317,9 @@ namespace Plinko_Game
 
         private void mainWindow_Closed(object sender, EventArgs e)
         {
-            if (userNameHolLbl.Content.ToString() != " ") 
+
+
+            if (userNameHolLbl.Content.ToString() != string.Empty) 
             {
                 DateTime timeLogin = DateTime.Now;
                 var customerIn = (from a in amazonDB.table_Customers
