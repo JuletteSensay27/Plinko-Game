@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Plinko_Game"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="1080" SizeToContent="Height" Closed="mainWindow_Closed" Initialized="mainWindow_Initialized">
+        Title="MainWindow" Height="450" Width="1080" SizeToContent="Height" Closed="mainWindow_Closed" Initialized="mainWindow_Initialized" WindowStartupLocation="CenterScreen">
     <Grid x:Name="mainGrid">
         <Button x:Name="loginBtn" Content="Log In" HorizontalAlignment="Left" Margin="19,95,0,0" VerticalAlignment="Top" Height="27" Width="92" Click="loginBtn_Click"/>
         <Label x:Name="userNameLbl" Content="Username : " HorizontalAlignment="Left" Margin="19,211,0,0" VerticalAlignment="Top"/>

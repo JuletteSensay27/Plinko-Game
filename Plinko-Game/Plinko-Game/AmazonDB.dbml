@@ -67,22 +67,6 @@
       <Association Name="table_ID_table_Customer" Member="table_Customers" ThisKey="ID_ID" OtherKey="ID_ID" Type="table_Customer" />
     </Type>
   </Table>
-  <Function Name="dbo.vwFunqSearchCustomer" Method="vwFunqSearchCustomer" IsComposable="true">
-    <Parameter Name="username" Type="System.String" DbType="NVarChar(50)" />
-    <ElementType Name="vwFunqSearchCustomerResult">
-      <Column Name="Customer_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Customer_Username" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Customer_Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Customer_FirstName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="Customer_MiddleName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Customer_LastName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="ID_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Customer_IDNumber" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="Customer_PhoneNumber" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
-      <Column Name="Customer_CurrentBalance" Type="System.Decimal" DbType="Decimal(19,4) NOT NULL" CanBeNull="false" />
-      <Column Name="Customer_TotalSpent" Type="System.Decimal" DbType="Decimal(19,4) NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.vwFunqAllGameLogs" Method="vwFunqAllGameLogs" IsComposable="true">
     <ElementType Name="vwFunqAllGameLogsResult">
       <Column Name="GameLog_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -103,6 +87,22 @@
       <Column Name="Machine_CurrentBalance" Type="System.Decimal" DbType="Decimal(19,4) NOT NULL" CanBeNull="false" />
       <Column Name="Machine_CurrentCustomerWinnings" Type="System.Decimal" DbType="Decimal(19,4) NOT NULL" CanBeNull="false" />
       <Column Name="Customer_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.vwFunqSearchCustomer" Method="vwFunqSearchCustomer" IsComposable="true">
+    <Parameter Name="username" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="vwFunqSearchCustomerResult">
+      <Column Name="Customer_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Customer_Username" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Customer_Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Customer_FirstName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Customer_MiddleName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Customer_LastName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Customer_IDNumber" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Customer_PhoneNumber" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
+      <Column Name="Customer_CurrentBalance" Type="System.Decimal" DbType="Decimal(19,4) NOT NULL" CanBeNull="false" />
+      <Column Name="Customer_TotalSpent" Type="System.Decimal" DbType="Decimal(19,4) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
   <Function Name="dbo.uspAddBalance" Method="uspAddBalance">
@@ -157,10 +157,15 @@
     </ElementType>
   </Function>
   <Function Name="dbo.uspSelectMachineCurrentWinnings" Method="uspSelectMachineCurrentWinnings">
-    <Parameter Name="customerID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="machineID" Type="System.Int32" DbType="Int" />
     <ElementType Name="uspSelectMachineCurrentWinningsResult">
       <Column Name="Machine_CurrentCustomerWinnings" Type="System.Decimal" DbType="Decimal(19,4) NOT NULL" CanBeNull="false" />
     </ElementType>
+  </Function>
+  <Function Name="dbo.uspUpdateCashOutMachineBalance" Method="uspUpdateCashOutMachineBalance">
+    <Parameter Name="machineID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="lessBalance" Type="System.Decimal" DbType="Decimal(19,4)" />
+    <Return Type="System.Int32" />
   </Function>
   <Function Name="dbo.uspUpdateCustomerCurrentBalance" Method="uspUpdateCustomerCurrentBalance">
     <Parameter Name="customerID" Type="System.Int32" DbType="Int" />
@@ -169,7 +174,7 @@
   </Function>
   <Function Name="dbo.uspUpdateMachineBalance" Method="uspUpdateMachineBalance">
     <Parameter Name="machineID" Type="System.Int32" DbType="Int" />
-    <Parameter Name="addBalance" Type="System.Decimal" DbType="Decimal(19,4)" />
+    <Parameter Name="newBalance" Type="System.Decimal" DbType="Decimal(19,4)" />
     <Return Type="System.Int32" />
   </Function>
   <Function Name="dbo.uspUpdateMachineCurrentWinnings" Method="uspUpdateMachineCurrentWinnings">
