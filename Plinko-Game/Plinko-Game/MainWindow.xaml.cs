@@ -232,11 +232,6 @@ namespace Plinko_Game
 
         }
 
-        private async void gameButton_Click(object sender, EventArgs e) 
-        {
-            
-        }
-
         private async void dropBall() 
         {
             Label[] prizeRow = new Label[9];
