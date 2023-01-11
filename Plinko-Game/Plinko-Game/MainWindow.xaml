@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Plinko_Game"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="1080" SizeToContent="Height" Closed="mainWindow_Closed" Initialized="mainWindow_Initialized" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="NoResize" WindowStyle="None">
+        Title="MainWindow" Height="450" Width="1080" SizeToContent="WidthAndHeight" Closed="mainWindow_Closed" Initialized="mainWindow_Initialized" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None">
     <Grid x:Name="mainGrid">
         <Grid.Background>
             <ImageBrush ImageSource="/Free-download-Neon-Purple-Aesthetic-Wallpaper-HD.jpg" Opacity="1"/>
@@ -76,7 +76,5 @@
             </Label.Effect>
         </Label>
         <Button x:Name="closeBtn" Content="x" HorizontalAlignment="Left" Margin="1049,0,0,0" VerticalAlignment="Top" Background="#FFDF4B4B" FontFamily="Arial" Foreground="White" Click="closeBtn_Click" BorderBrush="{x:Null}" FontWeight="Bold" Height="67" Width="31"/>
-        <Image x:Name="gambleGIF" Height="100" Width="100" Source="/casino.gif"/>
-
     </Grid>
 </Window>

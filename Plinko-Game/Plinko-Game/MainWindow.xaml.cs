@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using System.Drawing;
 using System.Windows.Media.Effects;
 using System.Media;
+using System.Linq.Expressions;
+using System.Windows.Media.Animation;
 
 namespace Plinko_Game
 {
@@ -44,7 +46,6 @@ namespace Plinko_Game
         private int logCounter = 0;
         private int totalWager = 0;
         private decimal newMachineBal = 0;
-        private SoundPlayer musicBg = new SoundPlayer();
 
         public MainWindow()
         {
@@ -60,10 +61,8 @@ namespace Plinko_Game
 
              }
             gameButton.Visibility = Visibility.Hidden;
-            musicBg.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\PERSONA 5 Remix 🎵 Last Surprise (Future Funk Remix)  ► RobKTA's ＂Ambush Vibes!!＂ ♪ GameChops.wav";
-            musicBg.PlayLooping();
             
-
+ 
             infoHolRect.Height = gameBoardCont.Height + 150;
             txtloginUsername.FontFamily = new FontFamily("Lexend Deca");
             txtloginUsername.Foreground = new SolidColorBrush(Colors.White);
@@ -187,13 +186,13 @@ namespace Plinko_Game
                                 grid.Content = "x1/2";
                                 break;
                             case 3:
-                                grid.Content = "x0";
+                                grid.Content = "x1/5";
                                 break;
                             case 4:
-                                grid.Content = "x1";
+                                grid.Content = "x2";
                                 break;
                             case 5:
-                                grid.Content = "x0";
+                                grid.Content = "x1/5";
                                 break;
                             case 6:
                                 grid.Content = "x1/2";
@@ -245,13 +244,13 @@ namespace Plinko_Game
                         gameBoard[8][y].Content = "x1/2";
                         break;
                     case 3:
-                        gameBoard[8][y].Content = "x0";
+                        gameBoard[8][y].Content = "x1/5";
                         break;
                     case 4:
-                        gameBoard[8][y].Content = "x1";
+                        gameBoard[8][y].Content = "x2";
                         break;
                     case 5:
-                        gameBoard[8][y].Content = "x0";
+                        gameBoard[8][y].Content = "x1/5";
                         break;
                     case 6:
                         gameBoard[8][y].Content = "x1/2";
@@ -1352,55 +1351,55 @@ namespace Plinko_Game
                         case 0:
                             playerPrize = playerWager * 10;                        
                             currentPlayerWinnings += playerPrize;
-                            logComment = $"Customer {customerIn.Customer_FirstName} won ";
+                            logComment = $"Customer {customerIn.Customer_FirstName} won ten times their wager ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 1:
                             playerPrize = playerWager * 3;                       
-                            currentPlayerWinnings += playerPrize;
-                            logComment = $"Customer {customerIn.Customer_FirstName} won ";
+                            currentPlayerWinnings += playerPrize; 
+                            logComment = $"Customer {customerIn.Customer_FirstName} won three times their wager ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 2:
                             playerPrize = playerWager * 1/2;                          
                             currentPlayerWinnings += playerPrize;
-                            logComment = $"Customer {customerIn.Customer_FirstName} won ";
+                            logComment = $"Customer {customerIn.Customer_FirstName} Lost half of their wager ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 3:
-                            playerPrize = playerWager * 0;                           
+                            playerPrize = playerWager * 1/5;                           
                             currentPlayerWinnings += playerPrize;
-                            logComment = $"Customer {customerIn.Customer_FirstName} lost ";
+                            logComment = $"Customer {customerIn.Customer_FirstName} lost a fifth of their wager ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 4:
-                            playerPrize = playerWager * 1;                          
+                            playerPrize = playerWager * 2;                          
                             currentPlayerWinnings += playerPrize;
-                            logComment = $"Customer {customerIn.Customer_FirstName} broke even ";
+                            logComment = $"Customer {customerIn.Customer_FirstName}  won twice their wager ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 5:
-                            playerPrize = playerWager * 0;                         
+                            playerPrize = playerWager * 1/5;                         
                             currentPlayerWinnings += playerPrize;
-                            logComment = $"Customer {customerIn.Customer_FirstName} lost ";
+                            logComment = $"Customer {customerIn.Customer_FirstName} lost a fifth of their wager ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 6:
                             playerPrize = playerWager * 1/2;                           
                             currentPlayerWinnings += playerPrize;
-                            logComment = $"Customer {customerIn.Customer_FirstName} won ";
+                            logComment = $"Customer {customerIn.Customer_FirstName}  Lost half of their wager ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 7:
                             playerPrize = playerWager * 3;                           
                             currentPlayerWinnings += playerPrize;
-                            logComment = $"Customer {customerIn.Customer_FirstName} won ";
+                            logComment = $"Customer {customerIn.Customer_FirstName} won three times their wager ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                         case 8:
                             playerPrize = playerWager * 10;                           
                             currentPlayerWinnings += playerPrize;
-                            logComment = $"Customer {customerIn.Customer_FirstName} won ";
+                            logComment = $"Customer {customerIn.Customer_FirstName}  won ten times their wager ";
                             userBalanceLbl.Content = $"User Balance: {userBalance}";
                             break;
                     }
@@ -1438,7 +1437,8 @@ namespace Plinko_Game
         {
             DateTime date = DateTime.Now;
             string logComment = "Machine Running Low on funds";
-         
+            amazonDB.uspUpdateMachineGame(machineID,gameID);
+
             if (getMachineBal() <= 10000)
             {
                 MessageBox.Show("MACHINE FUNDS RUNNING LOW! MAINTENANCE NEEDED!");

@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("casino.gif")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("persona%205%20remix%20%f0%9f%8e%b5%20last%20surprise%20(future%20funk%20remix)%20" +
     "%20%e2%96%ba%20robkta\'s%20%ef%bc%82ambush%20vibes!!%ef%bc%82%20%e2%99%aa%20gamec" +
     "hops.wav")]

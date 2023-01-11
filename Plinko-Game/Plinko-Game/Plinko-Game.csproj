@@ -115,7 +115,9 @@
     <Resource Include="Free-download-Neon-Purple-Aesthetic-Wallpaper-HD.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="casino.gif" />
+    <Content Include="casino.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="PERSONA 5 Remix 🎵 Last Surprise %28Future Funk Remix%29  ► RobKTA%27s ＂Ambush Vibes!!＂ ♪ GameChops.wav">
